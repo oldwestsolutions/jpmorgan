@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -144,16 +144,38 @@ const Legend: React.FC = () => {
 
   const [searchResults, setSearchResults] = useState<{ title: string; description: string; price?: string }[]>([]);
   const [selectedStock, setSelectedStock] = useState<{ title: string; description: string; price?: string } | null>(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const handleSearch = (query: string) => {
     if (query.toLowerCase() === 'netflix') {
       setSearchResults([
         { title: '', description: '**Netflix** is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices.', price: '$500.00' }
       ]);
+      setIsSearchOpen(true);
     } else {
       setSearchResults([]);
+      setIsSearchOpen(false);
     }
   };
+
+  const handleClickAway = () => {
+    setIsSearchOpen(false);
+    setSearchResults([]);
+  };
+
+  // Add useEffect for click away handling
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isSearchOpen && !(event.target as Element).closest('.search-container')) {
+        handleClickAway();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isSearchOpen]);
 
   const handleStockClick = (stock: { title: string; description: string; price?: string }) => {
     setSelectedStock(stock);
@@ -493,22 +515,20 @@ const Legend: React.FC = () => {
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.2 }}
     >
-      <Box 
-        onClick={(e) => e.stopPropagation()}
-        sx={{ 
-          position: 'absolute', 
-          top: '100%', 
-          left: 0, 
-          right: 0, 
-          bgcolor: 'rgba(26, 26, 26, 0.95)', 
-          borderRadius: 1, 
-          border: '1px solid #333', 
-          zIndex: 1,
-          maxHeight: '80vh',
-          overflowY: 'auto',
-          mt: 1
-        }}
-      >
+      <Box sx={{ 
+        position: 'absolute', 
+        top: '100%', 
+        left: 0, 
+        right: 0, 
+        bgcolor: 'rgba(26, 26, 26, 0.95)', 
+        borderRadius: 1, 
+        border: '1px solid #333', 
+        zIndex: 1,
+        maxHeight: '80vh',
+        overflowY: 'auto',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
+      }}>
         {searchResults.map((result, index) => (
           <Box 
             key={index} 
@@ -540,34 +560,13 @@ const Legend: React.FC = () => {
     </motion.div>
   );
 
-  // Add click outside handler
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (searchResults.length > 0) {
-        setSearchResults([]);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [searchResults]);
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Box sx={{ 
-        minHeight: '100vh', 
-        bgcolor: '#121212', 
-        overflow: 'hidden',
-        position: 'fixed',
-        width: '100%',
-        height: '100%'
-      }}>
+      <Box sx={{ minHeight: '100vh', bgcolor: '#121212', overflow: 'hidden' }}>
         <AppBar
           position="fixed"
           sx={{
@@ -580,7 +579,7 @@ const Legend: React.FC = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: { xs: '1rem', sm: '1.25rem' } }}>
               Legend
             </Typography>
-            <Box sx={{ position: 'relative', mr: 1 }}>
+            <Box sx={{ position: 'relative', mr: 1 }} className="search-container">
               <TextField
                 placeholder="Search..."
                 variant="outlined"
@@ -596,7 +595,9 @@ const Legend: React.FC = () => {
                 }}
                 onChange={(e) => handleSearch(e.target.value)}
               />
-              {searchResults.length > 0 && renderSearchResults()}
+              <AnimatePresence>
+                {isSearchOpen && searchResults.length > 0 && renderSearchResults()}
+              </AnimatePresence>
             </Box>
             <IconButton
               size="small"
