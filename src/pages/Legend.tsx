@@ -261,7 +261,15 @@ const Legend: React.FC = () => {
       exit={{ opacity: 0, x: 20 }}
       transition={{ duration: 0.3 }}
     >
-      <Paper sx={{ p: 2, bgcolor: '#1a1a1a', color: 'white', border: '1px solid #333' }}>
+      <Paper sx={{ 
+        p: 2, 
+        bgcolor: '#1a1a1a', 
+        color: 'white', 
+        border: '1px solid #333',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Typography variant="h5">Options Chain</Typography>
           <Box sx={{ display: 'flex', gap: 1 }}>
@@ -297,105 +305,181 @@ const Legend: React.FC = () => {
             </TextField>
           </Box>
         </Box>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
-              <Typography variant="h6" sx={{ mb: 1, color: '#43ea4a' }}>Call Options</Typography>
-              <Box sx={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(5, 1fr)',
-                gap: 1,
-                mb: 1,
-                p: 1,
-                bgcolor: '#333',
-                borderRadius: 1
-              }}>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>Strike</Typography>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>Bid</Typography>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>Ask</Typography>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>Volume</Typography>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>OI</Typography>
-              </Box>
+        {isMobile ? (
+          <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {/* Mobile Robinhood Style Options Chain */}
+            <Box sx={{ 
+              display: 'flex', 
+              gap: 1, 
+              mb: 1,
+              overflowX: 'auto',
+              pb: 1,
+              '&::-webkit-scrollbar': { height: 4 },
+              '&::-webkit-scrollbar-track': { bgcolor: '#1a1a1a' },
+              '&::-webkit-scrollbar-thumb': { bgcolor: '#333', borderRadius: 2 }
+            }}>
+              {['Calls', 'Puts'].map((type) => (
+                <Chip
+                  key={type}
+                  label={type}
+                  sx={{
+                    bgcolor: type === 'Calls' ? '#43ea4a' : '#ff4444',
+                    color: '#000',
+                    fontWeight: 600,
+                    minWidth: 80
+                  }}
+                />
+              ))}
+            </Box>
+            <Box sx={{ 
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 1,
+              flex: 1,
+              overflow: 'auto'
+            }}>
               {[500, 550, 600, 650, 700].map((strike) => (
-                <Box key={strike} sx={{ 
-                  display: 'grid', 
-                  gridTemplateColumns: 'repeat(5, 1fr)',
-                  gap: 1,
-                  p: 1,
-                  '&:hover': { bgcolor: '#333' },
-                  cursor: 'pointer'
-                }}>
-                  <Typography variant="body2">${strike}</Typography>
-                  <Typography variant="body2" color="#43ea4a">${(strike * 0.1).toFixed(2)}</Typography>
-                  <Typography variant="body2" color="#ff4444">${(strike * 0.11).toFixed(2)}</Typography>
-                  <Typography variant="body2">{(Math.random() * 1000).toFixed(0)}</Typography>
-                  <Typography variant="body2">{(Math.random() * 5000).toFixed(0)}</Typography>
+                <Box
+                  key={strike}
+                  sx={{
+                    p: 1.5,
+                    bgcolor: '#2a2a2a',
+                    borderRadius: 1,
+                    border: '1px solid #333',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Box>
+                    <Typography variant="subtitle2">${strike}</Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      {new Date().toLocaleDateString()}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', gap: 2 }}>
+                    <Box sx={{ textAlign: 'right' }}>
+                      <Typography variant="subtitle2" color="#43ea4a">
+                        ${(strike * 0.1).toFixed(2)}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        Call
+                      </Typography>
+                    </Box>
+                    <Box sx={{ textAlign: 'right' }}>
+                      <Typography variant="subtitle2" color="#ff4444">
+                        ${(strike * 0.08).toFixed(2)}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        Put
+                      </Typography>
+                    </Box>
+                  </Box>
                 </Box>
               ))}
             </Box>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
-              <Typography variant="h6" sx={{ mb: 1, color: '#ff4444' }}>Put Options</Typography>
-              <Box sx={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(5, 1fr)',
-                gap: 1,
-                mb: 1,
-                p: 1,
-                bgcolor: '#333',
-                borderRadius: 1
-              }}>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>Strike</Typography>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>Bid</Typography>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>Ask</Typography>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>Volume</Typography>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>OI</Typography>
-              </Box>
-              {[500, 550, 600, 650, 700].map((strike) => (
-                <Box key={strike} sx={{ 
+          </Box>
+        ) : (
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+                <Typography variant="h6" sx={{ mb: 1, color: '#43ea4a' }}>Call Options</Typography>
+                <Box sx={{ 
                   display: 'grid', 
                   gridTemplateColumns: 'repeat(5, 1fr)',
                   gap: 1,
+                  mb: 1,
                   p: 1,
-                  '&:hover': { bgcolor: '#333' },
-                  cursor: 'pointer'
+                  bgcolor: '#333',
+                  borderRadius: 1
                 }}>
-                  <Typography variant="body2">${strike}</Typography>
-                  <Typography variant="body2" color="#43ea4a">${(strike * 0.08).toFixed(2)}</Typography>
-                  <Typography variant="body2" color="#ff4444">${(strike * 0.09).toFixed(2)}</Typography>
-                  <Typography variant="body2">{(Math.random() * 1000).toFixed(0)}</Typography>
-                  <Typography variant="body2">{(Math.random() * 5000).toFixed(0)}</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>Strike</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>Bid</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>Ask</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>Volume</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>OI</Typography>
                 </Box>
-              ))}
-            </Box>
+                {[500, 550, 600, 650, 700].map((strike) => (
+                  <Box key={strike} sx={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(5, 1fr)',
+                    gap: 1,
+                    p: 1,
+                    '&:hover': { bgcolor: '#333' },
+                    cursor: 'pointer'
+                  }}>
+                    <Typography variant="body2">${strike}</Typography>
+                    <Typography variant="body2" color="#43ea4a">${(strike * 0.1).toFixed(2)}</Typography>
+                    <Typography variant="body2" color="#ff4444">${(strike * 0.11).toFixed(2)}</Typography>
+                    <Typography variant="body2">{(Math.random() * 1000).toFixed(0)}</Typography>
+                    <Typography variant="body2">{(Math.random() * 5000).toFixed(0)}</Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+                <Typography variant="h6" sx={{ mb: 1, color: '#ff4444' }}>Put Options</Typography>
+                <Box sx={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(5, 1fr)',
+                  gap: 1,
+                  mb: 1,
+                  p: 1,
+                  bgcolor: '#333',
+                  borderRadius: 1
+                }}>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>Strike</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>Bid</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>Ask</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>Volume</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>OI</Typography>
+                </Box>
+                {[500, 550, 600, 650, 700].map((strike) => (
+                  <Box key={strike} sx={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(5, 1fr)',
+                    gap: 1,
+                    p: 1,
+                    '&:hover': { bgcolor: '#333' },
+                    cursor: 'pointer'
+                  }}>
+                    <Typography variant="body2">${strike}</Typography>
+                    <Typography variant="body2" color="#43ea4a">${(strike * 0.08).toFixed(2)}</Typography>
+                    <Typography variant="body2" color="#ff4444">${(strike * 0.09).toFixed(2)}</Typography>
+                    <Typography variant="body2">{(Math.random() * 1000).toFixed(0)}</Typography>
+                    <Typography variant="body2">{(Math.random() * 5000).toFixed(0)}</Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+                <Typography variant="h6" sx={{ mb: 1 }}>Options Analysis</Typography>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={4}>
+                    <Box sx={{ p: 2, bgcolor: '#333', borderRadius: 1 }}>
+                      <Typography variant="subtitle2" color="text.secondary">Implied Volatility</Typography>
+                      <Typography variant="h6" color="#43ea4a">32.5%</Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <Box sx={{ p: 2, bgcolor: '#333', borderRadius: 1 }}>
+                      <Typography variant="subtitle2" color="text.secondary">Put/Call Ratio</Typography>
+                      <Typography variant="h6" color="#ff4444">0.85</Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <Box sx={{ p: 2, bgcolor: '#333', borderRadius: 1 }}>
+                      <Typography variant="subtitle2" color="text.secondary">Max Pain</Typography>
+                      <Typography variant="h6" color="#43ea4a">$550</Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
-              <Typography variant="h6" sx={{ mb: 1 }}>Options Analysis</Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={4}>
-                  <Box sx={{ p: 2, bgcolor: '#333', borderRadius: 1 }}>
-                    <Typography variant="subtitle2" color="text.secondary">Implied Volatility</Typography>
-                    <Typography variant="h6" color="#43ea4a">32.5%</Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Box sx={{ p: 2, bgcolor: '#333', borderRadius: 1 }}>
-                    <Typography variant="subtitle2" color="text.secondary">Put/Call Ratio</Typography>
-                    <Typography variant="h6" color="#ff4444">0.85</Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Box sx={{ p: 2, bgcolor: '#333', borderRadius: 1 }}>
-                    <Typography variant="subtitle2" color="text.secondary">Max Pain</Typography>
-                    <Typography variant="h6" color="#43ea4a">$550</Typography>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Box>
-          </Grid>
-        </Grid>
+        )}
       </Paper>
     </motion.div>
   );
@@ -955,7 +1039,7 @@ const Legend: React.FC = () => {
             p: { xs: 1, sm: 2 },
             mt: { xs: '56px', sm: '64px' },
             mb: { xs: 1, sm: 2 },
-            height: { xs: 'calc(100vh - 76px)', sm: 'calc(100vh - 84px)' },
+            height: { xs: 'calc(100vh - 68px)', sm: 'calc(100vh - 76px)' },
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
