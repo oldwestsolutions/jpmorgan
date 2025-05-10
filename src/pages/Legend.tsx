@@ -157,11 +157,17 @@ const Legend: React.FC = () => {
   const [isMailboxFull, setIsMailboxFull] = useState(false);
   const [isComposing, setIsComposing] = useState(false);
 
-  // Sample messages for preview
-  const sampleMessages = [
-    { id: 1, subject: 'Market Update', preview: 'Latest market trends and analysis...', time: '2m ago', unread: true },
-    { id: 2, subject: 'Portfolio Alert', preview: 'Your portfolio has reached a new milestone...', time: '15m ago', unread: true },
-    { id: 3, subject: 'Trading Opportunity', preview: 'New trading opportunity detected...', time: '1h ago', unread: false },
+  const mockSearchResults = [
+    {
+      symbol: 'NFLX',
+      name: 'Netflix, Inc.',
+      price: 612.45,
+      change: '+2.34%',
+      description: 'Global streaming entertainment service with 260M+ paid memberships in 190+ countries.',
+      sector: 'Communication Services',
+      industry: 'Entertainment'
+    },
+    // ... other results ...
   ];
 
   const handleSearch = (query: string) => {
@@ -939,9 +945,9 @@ const Legend: React.FC = () => {
         </Button>
       </Box>
       <Box sx={{ maxHeight: 300, overflow: 'auto' }}>
-        {sampleMessages.map((message) => (
+        {mockSearchResults.map((result, index) => (
           <MenuItem
-            key={message.id}
+            key={index}
             sx={{
               display: 'block',
               p: 1.5,
@@ -953,14 +959,14 @@ const Legend: React.FC = () => {
               <Typography
                 variant="subtitle2"
                 sx={{
-                  fontWeight: message.unread ? 600 : 400,
-                  color: message.unread ? '#fff' : 'text.secondary'
+                  fontWeight: 600,
+                  color: 'text.secondary'
                 }}
               >
-                {message.subject}
+                {result.name}
               </Typography>
               <Typography variant="caption" color="text.secondary">
-                {message.time}
+                {result.price}
               </Typography>
             </Box>
             <Typography
@@ -973,7 +979,7 @@ const Legend: React.FC = () => {
                 whiteSpace: 'nowrap'
               }}
             >
-              {message.preview}
+              {result.description}
             </Typography>
           </MenuItem>
         ))}
