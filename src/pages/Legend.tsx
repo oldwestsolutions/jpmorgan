@@ -148,6 +148,14 @@ const Legend: React.FC = () => {
   const [isMailOpen, setIsMailOpen] = useState(false);
   const [mailAnchorEl, setMailAnchorEl] = useState<null | HTMLElement>(null);
   const [isMailboxFull, setIsMailboxFull] = useState(false);
+  const [isComposing, setIsComposing] = useState(false);
+
+  // Sample messages for preview
+  const sampleMessages = [
+    { id: 1, subject: 'Market Update', preview: 'Latest market trends and analysis...', time: '2m ago', unread: true },
+    { id: 2, subject: 'Portfolio Alert', preview: 'Your portfolio has reached a new milestone...', time: '15m ago', unread: true },
+    { id: 3, subject: 'Trading Opportunity', preview: 'New trading opportunity detected...', time: '1h ago', unread: false },
+  ];
 
   const handleSearch = (query: string) => {
     if (query.toLowerCase() === 'netflix') {
@@ -205,6 +213,11 @@ const Legend: React.FC = () => {
 
   const handleMailboxToggle = () => {
     setIsMailboxFull(!isMailboxFull);
+    handleMailClose();
+  };
+
+  const handleComposeClick = () => {
+    setIsComposing(true);
     handleMailClose();
   };
 
@@ -588,7 +601,8 @@ const Legend: React.FC = () => {
           bgcolor: '#1a1a1a',
           color: 'white',
           mt: 1.5,
-          minWidth: 200,
+          width: 320,
+          maxHeight: 400,
           boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
           '& .MuiMenuItem-root': {
             fontSize: '0.875rem',
@@ -599,12 +613,166 @@ const Legend: React.FC = () => {
         }
       }}
     >
-      <MenuItem onClick={handleMailboxToggle}>
-        {isMailboxFull ? 'Empty Mailbox' : 'Fill Mailbox'}
-      </MenuItem>
+      <Box sx={{ p: 1, borderBottom: '1px solid #333' }}>
+        <Button
+          fullWidth
+          variant="contained"
+          startIcon={<Mail />}
+          onClick={handleComposeClick}
+          sx={{
+            bgcolor: '#43ea4a',
+            color: '#000',
+            '&:hover': { bgcolor: '#2fc437' },
+            mb: 1
+          }}
+        >
+          Compose
+        </Button>
+      </Box>
+      <Box sx={{ maxHeight: 300, overflow: 'auto' }}>
+        {sampleMessages.map((message) => (
+          <MenuItem
+            key={message.id}
+            sx={{
+              display: 'block',
+              p: 1.5,
+              borderBottom: '1px solid #333',
+              '&:last-child': { borderBottom: 'none' }
+            }}
+          >
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5 }}>
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  fontWeight: message.unread ? 600 : 400,
+                  color: message.unread ? '#fff' : 'text.secondary'
+                }}
+              >
+                {message.subject}
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                {message.time}
+              </Typography>
+            </Box>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                fontSize: '0.75rem',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              {message.preview}
+            </Typography>
+          </MenuItem>
+        ))}
+      </Box>
       <Divider sx={{ bgcolor: '#333' }} />
+      <MenuItem onClick={handleMailboxToggle}>
+        {isMailboxFull ? 'Empty Mailbox' : 'View Full Mailbox'}
+      </MenuItem>
       <MenuItem onClick={handleMailClose}>Close</MenuItem>
     </Menu>
+  );
+
+  const renderComposeMessage = () => (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Paper sx={{ 
+        p: 2, 
+        bgcolor: '#1a1a1a', 
+        color: 'white', 
+        border: '1px solid #333',
+        height: '100%',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+          <Typography variant="h6">Compose Message</Typography>
+          <IconButton onClick={() => setIsComposing(false)} size="small">
+            <ExitToApp sx={{ color: '#43ea4a' }} />
+          </IconButton>
+        </Box>
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <TextField
+            label="To"
+            variant="outlined"
+            size="small"
+            fullWidth
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                color: 'white',
+                '& fieldset': { borderColor: '#333' },
+                '&:hover fieldset': { borderColor: '#43ea4a' },
+                '&.Mui-focused fieldset': { borderColor: '#43ea4a' }
+              },
+              '& .MuiInputLabel-root': { color: 'text.secondary' }
+            }}
+          />
+          <TextField
+            label="Subject"
+            variant="outlined"
+            size="small"
+            fullWidth
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                color: 'white',
+                '& fieldset': { borderColor: '#333' },
+                '&:hover fieldset': { borderColor: '#43ea4a' },
+                '&.Mui-focused fieldset': { borderColor: '#43ea4a' }
+              },
+              '& .MuiInputLabel-root': { color: 'text.secondary' }
+            }}
+          />
+          <TextField
+            label="Message"
+            variant="outlined"
+            multiline
+            rows={8}
+            fullWidth
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                color: 'white',
+                '& fieldset': { borderColor: '#333' },
+                '&:hover fieldset': { borderColor: '#43ea4a' },
+                '&.Mui-focused fieldset': { borderColor: '#43ea4a' }
+              },
+              '& .MuiInputLabel-root': { color: 'text.secondary' }
+            }}
+          />
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+            <Button
+              variant="outlined"
+              onClick={() => setIsComposing(false)}
+              sx={{
+                color: 'white',
+                borderColor: '#333',
+                '&:hover': { borderColor: '#43ea4a' }
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: '#43ea4a',
+                color: '#000',
+                '&:hover': { bgcolor: '#2fc437' }
+              }}
+            >
+              Send
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
+    </motion.div>
   );
 
   const renderMailbox = () => (
@@ -750,7 +918,9 @@ const Legend: React.FC = () => {
             >
               <Mail sx={{ fontSize: { xs: 24, sm: 28 } }} />
             </IconButton>
-            {renderMailDropdown()}
+            {isComposing ? (
+              renderComposeMessage()
+            ) : renderMailDropdown()}
           </Toolbar>
         </AppBar>
 
@@ -767,7 +937,9 @@ const Legend: React.FC = () => {
             position: 'relative'
           }}
         >
-          {isMailboxFull ? (
+          {isComposing ? (
+            renderComposeMessage()
+          ) : isMailboxFull ? (
             renderMailbox()
           ) : (
             selectedStock ? (
