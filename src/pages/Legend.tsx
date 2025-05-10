@@ -490,20 +490,25 @@ const Legend: React.FC = () => {
     <motion.div
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.2 }}
     >
-      <Box sx={{ 
-        position: 'absolute', 
-        top: '100%', 
-        left: 0, 
-        right: 0, 
-        bgcolor: 'rgba(26, 26, 26, 0.95)', 
-        borderRadius: 1, 
-        border: '1px solid #333', 
-        zIndex: 1,
-        maxHeight: '80vh',
-        overflowY: 'auto'
-      }}>
+      <Box 
+        onClick={(e) => e.stopPropagation()}
+        sx={{ 
+          position: 'absolute', 
+          top: '100%', 
+          left: 0, 
+          right: 0, 
+          bgcolor: 'rgba(26, 26, 26, 0.95)', 
+          borderRadius: 1, 
+          border: '1px solid #333', 
+          zIndex: 1,
+          maxHeight: '80vh',
+          overflowY: 'auto',
+          mt: 1
+        }}
+      >
         {searchResults.map((result, index) => (
           <Box 
             key={index} 
@@ -526,7 +531,7 @@ const Legend: React.FC = () => {
                   height: { xs: 24, sm: 30 }
                 }}
               />
-              <Typography variant="subtitle1" sx={{ ml: 'auto', color: '#43ea4a' }}>{result.price}</Typography>
+              <Typography variant="subtitle1" sx={{ ml: 'auto', color: '#43ea4a', fontSize: { xs: '0.875rem', sm: '1rem' } }}>{result.price}</Typography>
             </Box>
             <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.875rem' }}>{result.description}</Typography>
           </Box>
@@ -535,13 +540,34 @@ const Legend: React.FC = () => {
     </motion.div>
   );
 
+  // Add click outside handler
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchResults.length > 0) {
+        setSearchResults([]);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [searchResults]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Box sx={{ minHeight: '100vh', bgcolor: '#121212', overflow: 'hidden' }}>
+      <Box sx={{ 
+        minHeight: '100vh', 
+        bgcolor: '#121212', 
+        overflow: 'hidden',
+        position: 'fixed',
+        width: '100%',
+        height: '100%'
+      }}>
         <AppBar
           position="fixed"
           sx={{
@@ -618,6 +644,7 @@ const Legend: React.FC = () => {
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
+            position: 'relative'
           }}
         >
           {selectedStock ? (
