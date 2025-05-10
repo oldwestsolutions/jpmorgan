@@ -77,10 +77,10 @@ const Login: React.FC = () => {
           sx={{ 
             flex: 1,
             display: 'flex',
-            alignItems: { xs: 'flex-start', sm: 'center' },
+            alignItems: { xs: 'center', sm: 'center' },
             justifyContent: 'center',
             pt: { xs: 0, sm: 0 },
-            mt: { xs: -8, sm: -12 },
+            mt: { xs: 0, sm: 0 },
             pb: { xs: 4, sm: 0 }
           }}
         >
