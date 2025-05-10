@@ -175,8 +175,8 @@ const Legend: React.FC = () => {
       setSearchResults([
         { 
           title: 'Netflix, Inc.', 
-          description: '**Netflix** is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices. Founded in 1997, Netflix has grown to become one of the world\'s leading entertainment companies with over 200 million paid memberships in over 190 countries.', 
-          price: '$500.00',
+          description: 'Global streaming entertainment service with 260M+ paid memberships in 190+ countries.', 
+          price: '$612.45',
           icon: <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix Logo" style={{ width: 24, height: 24 }} />
         }
       ]);
@@ -273,37 +273,44 @@ const Legend: React.FC = () => {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      style={{ height: '100%', overflow: 'auto' }}
     >
-      <Paper sx={{ p: 2, bgcolor: '#1a1a1a', color: 'white', border: '1px solid #333' }}>
-        <Typography variant="h5" sx={{ mb: 2 }}>Netflix Biography</Typography>
+      <Paper sx={{ 
+        p: { xs: 1.5, sm: 2 }, 
+        bgcolor: '#1a1a1a', 
+        color: 'white', 
+        border: '1px solid #333',
+        height: '100%'
+      }}>
+        <Typography variant="h5" sx={{ mb: 2, fontSize: { xs: '1.1rem', sm: '1.25rem' } }}>Netflix Biography</Typography>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
-              <Typography variant="h6" sx={{ mb: 1 }}>Company Overview</Typography>
-              <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+            <Box sx={{ p: { xs: 1.5, sm: 2 }, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+              <Typography variant="h6" sx={{ mb: 1, fontSize: { xs: '1rem', sm: '1.1rem' } }}>Company Overview</Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 2, fontSize: { xs: '0.875rem', sm: '1rem' } }}>
                 Netflix, Inc. is an American subscription streaming service and production company. Launched on August 29, 1997, it offers a film and television series library through distribution deals as well as its own productions, known as Netflix Originals.
               </Typography>
-              <Typography variant="body1" color="text.secondary">
+              <Typography variant="body1" color="text.secondary" sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
                 The company's primary business is its subscription-based streaming service which offers online streaming of a library of films and television programs, including those produced in-house. As of 2024, Netflix has over 200 million paid memberships in over 190 countries.
               </Typography>
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
-              <Typography variant="h6" sx={{ mb: 1 }}>Leadership</Typography>
+            <Box sx={{ p: { xs: 1.5, sm: 2 }, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+              <Typography variant="h6" sx={{ mb: 1, fontSize: { xs: '1rem', sm: '1.1rem' } }}>Leadership</Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1 }}>
-                  <Typography variant="subtitle1" sx={{ color: '#43ea4a' }}>Reed Hastings</Typography>
-                  <Typography variant="body2" color="text.secondary">Co-Founder & Co-CEO</Typography>
+                  <Typography variant="subtitle1" sx={{ color: '#43ea4a', fontSize: { xs: '0.9rem', sm: '1rem' } }}>Reed Hastings</Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>Co-Founder & Co-CEO</Typography>
                 </Box>
                 <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1 }}>
-                  <Typography variant="subtitle1" sx={{ color: '#43ea4a' }}>Ted Sarandos</Typography>
-                  <Typography variant="body2" color="text.secondary">Co-CEO</Typography>
+                  <Typography variant="subtitle1" sx={{ color: '#43ea4a', fontSize: { xs: '0.9rem', sm: '1rem' } }}>Ted Sarandos</Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>Co-CEO</Typography>
                 </Box>
                 <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1 }}>
-                  <Typography variant="subtitle1" sx={{ color: '#43ea4a' }}>Greg Peters</Typography>
-                  <Typography variant="body2" color="text.secondary">COO & CPO</Typography>
+                  <Typography variant="subtitle1" sx={{ color: '#43ea4a', fontSize: { xs: '0.9rem', sm: '1rem' } }}>Greg Peters</Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>COO & CPO</Typography>
                 </Box>
               </Box>
             </Box>
@@ -349,7 +356,8 @@ const Legend: React.FC = () => {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      style={{ height: '100%' }}
     >
       <Paper sx={{ 
         p: 2, 
@@ -591,7 +599,8 @@ const Legend: React.FC = () => {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      style={{ height: '100%' }}
     >
       <Paper sx={{ p: 2, bgcolor: '#1a1a1a', color: 'white', border: '1px solid #333' }}>
         <Typography variant="h5" sx={{ mb: 2 }}>Latest News</Typography>
@@ -696,7 +705,8 @@ const Legend: React.FC = () => {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      style={{ height: '100%' }}
     >
       <Paper sx={{ 
         p: 2, 
@@ -817,13 +827,7 @@ const Legend: React.FC = () => {
       }}>
         <Typography variant="body2" color="text.secondary">Graph Placeholder</Typography>
       </Box>
-      <Box sx={{ 
-        display: 'flex', 
-        gap: 0.5, 
-        mb: 1, 
-        flexWrap: 'wrap',
-        justifyContent: 'center'
-      }}>
+      <Box sx={{ display: 'flex', gap: 0.5, mb: 1, flexWrap: 'wrap', justifyContent: 'center' }}>
         {['Daily', 'Weekly', 'Monthly', 'YTD', 'Year', '5Y'].map((period) => (
           <Button 
             key={period} 
@@ -846,13 +850,19 @@ const Legend: React.FC = () => {
   );
 
   const renderSearchResults = () => (
-    <Box sx={{ mt: 2 }}>
+    <Box sx={{ 
+      mt: 2,
+      position: 'absolute',
+      width: { xs: '280px', sm: '320px' },
+      right: 0,
+      zIndex: 1000
+    }}>
       {searchResults.map((result, index) => (
         <Paper
           key={index}
           sx={{
-            p: 2,
-            mb: 2,
+            p: 1.5,
+            mb: 1,
             bgcolor: '#1a1a1a',
             color: 'white',
             border: '1px solid #333',
@@ -861,10 +871,10 @@ const Legend: React.FC = () => {
           }}
           onClick={() => handleStockClick(result)}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5 }}>
             <Box sx={{ 
-              width: 40, 
-              height: 40, 
+              width: 32, 
+              height: 32, 
               bgcolor: '#333', 
               borderRadius: 1,
               display: 'flex',
@@ -873,32 +883,18 @@ const Legend: React.FC = () => {
             }}>
               {result.icon}
             </Box>
-            <Box sx={{ flex: 1 }}>
-              <Typography variant="h6" sx={{ fontWeight: 600, color: 'white' }}>
-                {result.title}
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600, color: 'white', fontSize: '0.9rem' }}>
+                  {result.title}
+                </Typography>
+                <Typography variant="subtitle1" sx={{ color: '#43ea4a', fontWeight: 600, fontSize: '0.9rem' }}>
+                  {result.price}
+                </Typography>
+              </Box>
+              <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5, fontSize: '0.85rem' }}>
                 {result.description}
               </Typography>
-              {result.title === 'Netflix' && (
-                <Box sx={{ mt: 1, pt: 1, borderTop: '1px solid #333' }}>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    <strong>Founded:</strong> 1997
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    <strong>CEO:</strong> Ted Sarandos
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    <strong>Headquarters:</strong> Los Gatos, California
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    <strong>Business Model:</strong> Subscription-based streaming service
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    <strong>Key Products:</strong> Netflix Streaming, Netflix DVD, Netflix Games
-                  </Typography>
-                </Box>
-              )}
             </Box>
           </Box>
         </Paper>
@@ -1340,7 +1336,7 @@ const Legend: React.FC = () => {
             selectedStock ? (
               <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                 <Paper sx={{ 
-                  p: { xs: 1, sm: 2 }, 
+                  p: { xs: 1.5, sm: 2 }, 
                   bgcolor: '#1a1a1a', 
                   color: 'white', 
                   border: '1px solid #333', 
@@ -1436,7 +1432,7 @@ const Legend: React.FC = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
                       >
                         <Grid container spacing={{ xs: 1, sm: 2 }} sx={{ mt: 2 }}>
                           <Grid item xs={12} sm={6}>
