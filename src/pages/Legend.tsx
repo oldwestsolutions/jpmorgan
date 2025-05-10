@@ -618,9 +618,9 @@ const Legend: React.FC = () => {
                 }}
               />
               <Box sx={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-                <Typography variant="h4" sx={{ mb: 1, fontWeight: 700 }}>Netflix Announces Major Content Strategy Shift</Typography>
+                <Typography variant="h4" sx={{ mb: 1, fontWeight: 700, color: '#fff' }}>Netflix Announces Major Content Strategy Shift</Typography>
                 <Typography variant="subtitle1" sx={{ mb: 2, color: '#43ea4a' }}>May 10, 2024 • 5 min read</Typography>
-                <Typography variant="body1" sx={{ mb: 2 }}>
+                <Typography variant="body1" sx={{ mb: 2, color: '#fff' }}>
                   Netflix reveals plans to double down on original content production while exploring new revenue streams through gaming and merchandise...
                 </Typography>
                 <Button variant="contained" sx={{ alignSelf: 'flex-start', bgcolor: '#43ea4a', color: '#000', '&:hover': { bgcolor: '#2fc437' } }}>
@@ -633,9 +633,9 @@ const Legend: React.FC = () => {
           {/* Secondary Articles */}
           <Grid item xs={12} md={6}>
             <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333', height: '100%' }}>
-              <Typography variant="h6" sx={{ mb: 1 }}>Netflix Stock Surges on Strong Q1 Earnings</Typography>
+              <Typography variant="h6" sx={{ mb: 1, color: '#fff' }}>Netflix Stock Surges on Strong Q1 Earnings</Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>May 9, 2024 • 3 min read</Typography>
-              <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+              <Typography variant="body1" sx={{ mb: 2, color: '#fff' }}>
                 Netflix shares jumped 8% after reporting better-than-expected subscriber growth and revenue...
               </Typography>
               <Box sx={{ display: 'flex', gap: 1 }}>
@@ -647,9 +647,9 @@ const Legend: React.FC = () => {
           
           <Grid item xs={12} md={6}>
             <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333', height: '100%' }}>
-              <Typography variant="h6" sx={{ mb: 1 }}>New Original Series Breaks Viewing Records</Typography>
+              <Typography variant="h6" sx={{ mb: 1, color: '#fff' }}>New Original Series Breaks Viewing Records</Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>May 8, 2024 • 4 min read</Typography>
-              <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+              <Typography variant="body1" sx={{ mb: 2, color: '#fff' }}>
                 Netflix's latest original series has become the platform's most-watched show in its first week...
               </Typography>
               <Box sx={{ display: 'flex', gap: 1 }}>
