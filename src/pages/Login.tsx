@@ -77,9 +77,10 @@ const Login: React.FC = () => {
           sx={{ 
             flex: 1,
             display: 'flex',
-            alignItems: { xs: 'flex-end', sm: 'center' },
+            alignItems: { xs: 'flex-start', sm: 'center' },
             justifyContent: 'center',
-            pt: { xs: 0, sm: 8 },
+            pt: { xs: 0, sm: 0 },
+            mt: { xs: -8, sm: -12 },
             pb: { xs: 4, sm: 0 }
           }}
         >
@@ -202,6 +203,20 @@ const Login: React.FC = () => {
             </Paper>
           </motion.div>
         </Container>
+        <Box 
+          component="footer" 
+          sx={{ 
+            p: 2, 
+            borderTop: '1px solid #333',
+            textAlign: 'center',
+            color: 'text.secondary',
+            fontSize: '0.875rem'
+          }}
+        >
+          <Typography variant="body2">
+            © 2024 Robber Baron. All rights reserved.
+          </Typography>
+        </Box>
       </Box>
     </motion.div>
   );
