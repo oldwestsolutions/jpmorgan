@@ -305,8 +305,8 @@ const HomePage: React.FC = () => {
                       background: '#fff',
                       border: '1.5px solid #222',
                       '@media (max-width: 600px)': {
-                        bgcolor: '#fff',
-                        color: '#000',
+                        bgcolor: '#fff !important',
+                        color: '#000 !important',
                         border: '1.5px solid #222',
                         boxShadow: '0 4px 24px #0008'
                       }
@@ -340,7 +340,7 @@ const HomePage: React.FC = () => {
                         mb: 2, 
                         fontSize: { xs: 18, md: 34 },
                         '@media (max-width: 600px)': {
-                          color: '#000'
+                          color: '#000 !important'
                         }
                       }}>
                         {heroCarouselSlides[heroIndex].title}
@@ -350,7 +350,7 @@ const HomePage: React.FC = () => {
                         fontWeight: 500, 
                         color: '#000',
                         '@media (max-width: 600px)': {
-                          color: '#000'
+                          color: '#000 !important'
                         }
                       }}>
                         {heroCarouselSlides[heroIndex].desc}
