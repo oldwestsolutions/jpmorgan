@@ -20,6 +20,9 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  useTheme,
+  useMediaQuery,
+  Theme,
 } from '@mui/material';
 import {
   ArrowForward,
@@ -108,6 +111,8 @@ const HomePage: React.FC = () => {
   const [heroIndex, setHeroIndex] = useState(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [carouselDirection, setCarouselDirection] = useState<'left' | 'right'>('right');
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Auto-advance carousel every 10 seconds
   useEffect(() => {
@@ -131,6 +136,109 @@ const HomePage: React.FC = () => {
   const [newsletterOpen, setNewsletterOpen] = useState(false);
   const handleNewsletterOpen = () => setNewsletterOpen(true);
   const handleNewsletterClose = () => setNewsletterOpen(false);
+
+  const renderMobileCarousel = () => (
+    <Box sx={{ 
+      position: 'relative',
+      height: '220px',
+      width: '100%',
+      overflow: 'hidden',
+      borderRadius: 1,
+      bgcolor: '#1a1a1a',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={heroIndex}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          style={{ 
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <Paper sx={{
+            backgroundColor: '#fff',
+            borderRadius: 4,
+            padding: 2,
+            width: '100%',
+            maxWidth: '100%',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
+            border: '1.5px solid #222',
+            position: 'relative',
+            zIndex: 2,
+            margin: '0 16px',
+            minHeight: '180px'
+          }}>
+            <Box sx={{ mb: 2 }}>
+              {React.cloneElement(heroCarouselSlides[heroIndex].icon, { 
+                sx: { 
+                  fontSize: 40,
+                  color: '#111'
+                } 
+              })}
+            </Box>
+            <Typography variant="h5" sx={{ 
+              fontWeight: 800, 
+              color: '#000',
+              mb: 1,
+              fontSize: 18
+            }}>
+              {heroCarouselSlides[heroIndex].title}
+            </Typography>
+            <Typography variant="body2" sx={{ 
+              color: '#000',
+              fontSize: 12
+            }}>
+              {heroCarouselSlides[heroIndex].desc}
+            </Typography>
+          </Paper>
+        </motion.div>
+      </AnimatePresence>
+      <Box sx={{ 
+        position: 'absolute', 
+        bottom: 8,
+        left: '50%', 
+        transform: 'translateX(-50%)',
+        display: 'flex',
+        gap: 1.5,
+        zIndex: 10
+      }}>
+        {heroCarouselSlides.map((_, index) => (
+          <Box
+            key={index}
+            onClick={() => setHeroIndex(index)}
+            sx={{
+              width: 10,
+              height: 10,
+              borderRadius: '50%',
+              bgcolor: heroIndex === index ? '#43ea4a' : 'rgba(255,255,255,0.8)',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 0 8px rgba(0,0,0,0.3)',
+              '&:hover': {
+                bgcolor: heroIndex === index ? '#43ea4a' : 'rgba(255,255,255,1)',
+                transform: 'scale(1.1)'
+              }
+            }}
+          />
+        ))}
+      </Box>
+    </Box>
+  );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -256,140 +364,142 @@ const HomePage: React.FC = () => {
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Box sx={{ 
-                position: 'relative',
-                height: { xs: '220px', sm: '400px' },
-                width: '100%',
-                overflow: 'hidden',
-                borderRadius: 1,
-                bgcolor: '#1a1a1a'
-              }}>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={heroIndex}
-                    initial={{ opacity: 0, x: 100 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -100 }}
-                    transition={{ duration: 0.5 }}
-                    style={{ 
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      background: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url(${heroCarouselSlides[heroIndex].icon})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      padding: '2rem',
-                      textAlign: 'center'
-                    }}
-                  >
-                    <Paper elevation={0} sx={{
-                      bgcolor: '#fff',
-                      borderRadius: 10,
-                      p: { xs: 2, md: 7 },
-                      minHeight: { xs: 180, md: 340 },
-                      width: '100%',
-                      maxWidth: 520,
-                      textAlign: 'center',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 8px 48px #0008, 0 2px 16px #0008',
-                      position: 'relative',
-                      background: '#fff',
-                      border: '1.5px solid #222',
-                      '@media (max-width: 600px)': {
-                        bgcolor: '#fff !important',
-                        color: '#000 !important',
-                        border: '1.5px solid #222',
-                        boxShadow: '0 4px 24px #0008',
-                        position: 'relative',
-                        zIndex: 2
-                      }
-                    }}>
-                      <Box sx={{ 
-                        mb: 2, 
-                        display: 'flex', 
-                        justifyContent: 'center', 
+              {isMobile ? renderMobileCarousel() : (
+                <Box sx={{ 
+                  position: 'relative',
+                  height: { xs: '220px', sm: '400px' },
+                  width: '100%',
+                  overflow: 'hidden',
+                  borderRadius: 1,
+                  bgcolor: '#1a1a1a'
+                }}>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={heroIndex}
+                      initial={{ opacity: 0, x: 100 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -100 }}
+                      transition={{ duration: 0.5 }}
+                      style={{ 
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url(${heroCarouselSlides[heroIndex].icon})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
                         alignItems: 'center',
+                        padding: '2rem',
+                        textAlign: 'center'
+                      }}
+                    >
+                      <Paper elevation={0} sx={{
+                        bgcolor: '#fff',
+                        borderRadius: 10,
+                        p: { xs: 2, md: 7 },
+                        minHeight: { xs: 180, md: 340 },
+                        width: '100%',
+                        maxWidth: 520,
+                        textAlign: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 8px 48px #0008, 0 2px 16px #0008',
+                        position: 'relative',
+                        background: '#fff',
+                        border: '1.5px solid #222',
                         '@media (max-width: 600px)': {
-                          '& svg': {
-                            color: '#111 !important'
-                          }
+                          bgcolor: '#fff !important',
+                          color: '#000 !important',
+                          border: '1.5px solid #222',
+                          boxShadow: '0 4px 24px #0008',
+                          position: 'relative',
+                          zIndex: 2
                         }
                       }}>
-                        {React.cloneElement(heroCarouselSlides[heroIndex].icon, { 
-                          color: 'inherit', 
-                          sx: { 
-                            fontSize: { xs: 40, md: 56 }, 
-                            color: '#111',
-                            mb: 1,
-                            '@media (max-width: 600px)': {
+                        <Box sx={{ 
+                          mb: 2, 
+                          display: 'flex', 
+                          justifyContent: 'center', 
+                          alignItems: 'center',
+                          '@media (max-width: 600px)': {
+                            '& svg': {
                               color: '#111 !important'
                             }
-                          } 
-                        })}
-                      </Box>
-                      <Typography variant="h4" sx={{ 
-                        fontWeight: 800, 
-                        color: '#000', 
-                        mb: 2, 
-                        fontSize: { xs: 18, md: 34 },
-                        '@media (max-width: 600px)': {
-                          color: '#000 !important'
-                        }
-                      }}>
-                        {heroCarouselSlides[heroIndex].title}
-                      </Typography>
-                      <Typography variant="h6" sx={{ 
-                        fontSize: { xs: 12, md: 20 }, 
-                        fontWeight: 500, 
-                        color: '#000',
-                        '@media (max-width: 600px)': {
-                          color: '#000 !important'
-                        }
-                      }}>
-                        {heroCarouselSlides[heroIndex].desc}
-                      </Typography>
-                    </Paper>
-                  </motion.div>
-                </AnimatePresence>
-                <Box sx={{ 
-                  position: 'absolute', 
-                  bottom: { xs: 8, sm: 16 }, 
-                  left: '50%', 
-                  transform: 'translateX(-50%)',
-                  display: 'flex',
-                  gap: 1.5,
-                  zIndex: 10
-                }}>
-                  {heroCarouselSlides.map((_, index) => (
-                    <Box
-                      key={index}
-                      onClick={() => setHeroIndex(index)}
-                      sx={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: '50%',
-                        bgcolor: heroIndex === index ? '#43ea4a' : 'rgba(255,255,255,0.8)',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        boxShadow: '0 0 8px rgba(0,0,0,0.3)',
-                        '&:hover': {
-                          bgcolor: heroIndex === index ? '#43ea4a' : 'rgba(255,255,255,1)',
-                          transform: 'scale(1.1)'
-                        }
-                      }}
-                    />
-                  ))}
+                          }
+                        }}>
+                          {React.cloneElement(heroCarouselSlides[heroIndex].icon, { 
+                            color: 'inherit', 
+                            sx: { 
+                              fontSize: { xs: 40, md: 56 }, 
+                              color: '#111',
+                              mb: 1,
+                              '@media (max-width: 600px)': {
+                                color: '#111 !important'
+                              }
+                            } 
+                          })}
+                        </Box>
+                        <Typography variant="h4" sx={{ 
+                          fontWeight: 800, 
+                          color: '#000', 
+                          mb: 2, 
+                          fontSize: { xs: 18, md: 34 },
+                          '@media (max-width: 600px)': {
+                            color: '#000 !important'
+                          }
+                        }}>
+                          {heroCarouselSlides[heroIndex].title}
+                        </Typography>
+                        <Typography variant="h6" sx={{ 
+                          fontSize: { xs: 12, md: 20 }, 
+                          fontWeight: 500, 
+                          color: '#000',
+                          '@media (max-width: 600px)': {
+                            color: '#000 !important'
+                          }
+                        }}>
+                          {heroCarouselSlides[heroIndex].desc}
+                        </Typography>
+                      </Paper>
+                    </motion.div>
+                  </AnimatePresence>
+                  <Box sx={{ 
+                    position: 'absolute', 
+                    bottom: { xs: 8, sm: 16 }, 
+                    left: '50%', 
+                    transform: 'translateX(-50%)',
+                    display: 'flex',
+                    gap: 1.5,
+                    zIndex: 10
+                  }}>
+                    {heroCarouselSlides.map((_, index) => (
+                      <Box
+                        key={index}
+                        onClick={() => setHeroIndex(index)}
+                        sx={{
+                          width: 10,
+                          height: 10,
+                          borderRadius: '50%',
+                          bgcolor: heroIndex === index ? '#43ea4a' : 'rgba(255,255,255,0.8)',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease',
+                          boxShadow: '0 0 8px rgba(0,0,0,0.3)',
+                          '&:hover': {
+                            bgcolor: heroIndex === index ? '#43ea4a' : 'rgba(255,255,255,1)',
+                            transform: 'scale(1.1)'
+                          }
+                        }}
+                      />
+                    ))}
+                  </Box>
                 </Box>
-              </Box>
+              )}
             </Grid>
           </Grid>
         </Container>
@@ -404,10 +514,11 @@ const HomePage: React.FC = () => {
         sx={{
           '& .MuiDialog-paper': {
             '@media (max-width: 600px)': {
-              margin: '16px',
-              maxHeight: 'calc(100% - 32px)',
+              margin: '8px',
+              maxHeight: 'calc(100% - 16px)',
               position: 'absolute',
-              top: '10%'
+              top: '2%',
+              transform: 'translateY(0)'
             }
           }
         }}
