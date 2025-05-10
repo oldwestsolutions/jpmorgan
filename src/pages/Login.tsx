@@ -77,13 +77,14 @@ const Login: React.FC = () => {
           sx={{ 
             flex: 1,
             display: 'flex',
-            alignItems: 'flex-start',
+            alignItems: { xs: 'flex-end', sm: 'center' },
             justifyContent: 'center',
-            pt: { xs: 4, sm: 8 }
+            pt: { xs: 0, sm: 8 },
+            pb: { xs: 4, sm: 0 }
           }}
         >
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             style={{ width: '100%' }}

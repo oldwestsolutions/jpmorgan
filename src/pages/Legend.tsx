@@ -144,7 +144,12 @@ const Legend: React.FC = () => {
 
   const mainContentHeight = 'calc(100vh - 64px)'; // 64px for AppBar
 
-  const [searchResults, setSearchResults] = useState<{ title: string; description: string; price?: string }[]>([]);
+  const [searchResults, setSearchResults] = useState<Array<{
+    title: string;
+    description: string;
+    price?: string;
+    icon: React.ReactNode;
+  }>>([]);
   const [selectedStock, setSelectedStock] = useState<{ title: string; description: string; price?: string } | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMailOpen, setIsMailOpen] = useState(false);
@@ -165,7 +170,8 @@ const Legend: React.FC = () => {
         { 
           title: 'Netflix, Inc.', 
           description: '**Netflix** is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices. Founded in 1997, Netflix has grown to become one of the world\'s leading entertainment companies with over 200 million paid memberships in over 190 countries.', 
-          price: '$500.00' 
+          price: '$500.00',
+          icon: <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix Logo" style={{ width: 24, height: 24 }} />
         }
       ]);
       setIsSearchOpen(true);
@@ -834,84 +840,64 @@ const Legend: React.FC = () => {
   );
 
   const renderSearchResults = () => (
-    <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.2 }}
-    >
-      <Box sx={{ 
-        position: 'absolute', 
-        top: '100%', 
-        left: 0, 
-        right: 0, 
-        bgcolor: 'rgba(26, 26, 26, 0.95)', 
-        borderRadius: 1, 
-        border: '1px solid #333', 
-        zIndex: 1,
-        maxHeight: { xs: '60vh', sm: '80vh' },
-        overflowY: 'auto',
-        backdropFilter: 'blur(10px)',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
-      }}>
-        {searchResults.map((result, index) => (
-          <Box 
-            key={index} 
-            sx={{ 
-              p: { xs: 1, sm: 1.5 }, 
-              borderBottom: '1px solid #333', 
-              '&:last-child': { borderBottom: 'none' }, 
-              cursor: 'pointer',
-              '&:hover': { bgcolor: '#2a2a2a' }
-            }} 
-            onClick={() => handleStockClick(result)}
-          >
+    <Box sx={{ mt: 2 }}>
+      {searchResults.map((result, index) => (
+        <Paper
+          key={index}
+          sx={{
+            p: 2,
+            mb: 2,
+            bgcolor: '#1a1a1a',
+            color: 'white',
+            border: '1px solid #333',
+            cursor: 'pointer',
+            '&:hover': { bgcolor: '#222' }
+          }}
+          onClick={() => handleStockClick(result)}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Box sx={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              mb: { xs: 0.5, sm: 1 },
-              gap: 1
+              width: 40, 
+              height: 40, 
+              bgcolor: '#333', 
+              borderRadius: 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}>
-              <Box 
-                component="img"
-                src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" 
-                alt="Netflix Logo" 
-                sx={{ 
-                  height: { xs: 20, sm: 30 },
-                  width: 'auto'
-                }}
-              />
-              <Typography 
-                variant="caption" 
-                sx={{ 
-                  ml: 'auto', 
-                  color: '#43ea4a', 
-                  fontSize: { xs: '0.7rem', sm: '0.875rem' },
-                  fontWeight: 500
-                }}
-              >
-                {result.price}
-              </Typography>
+              {result.icon}
             </Box>
-            <Typography 
-              variant="body2" 
-              color="text.secondary" 
-              sx={{ 
-                fontSize: { xs: '0.75rem', sm: '0.875rem' },
-                lineHeight: 1.4,
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis'
-              }}
-            >
-              {result.description}
-            </Typography>
+            <Box sx={{ flex: 1 }}>
+              <Typography variant="h6" sx={{ fontWeight: 600, color: 'white' }}>
+                {result.title}
+              </Typography>
+              <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
+                {result.description}
+              </Typography>
+              {result.title === 'Netflix' && (
+                <Box sx={{ mt: 1, pt: 1, borderTop: '1px solid #333' }}>
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    <strong>Founded:</strong> 1997
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    <strong>CEO:</strong> Ted Sarandos
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    <strong>Headquarters:</strong> Los Gatos, California
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    <strong>Business Model:</strong> Subscription-based streaming service
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    <strong>Key Products:</strong> Netflix Streaming, Netflix DVD, Netflix Games
+                  </Typography>
+                </Box>
+              )}
+            </Box>
           </Box>
-        ))}
-      </Box>
-    </motion.div>
+        </Paper>
+      ))}
+    </Box>
   );
 
   const renderMailDropdown = () => (

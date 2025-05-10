@@ -322,17 +322,64 @@ const HomePage: React.FC = () => {
                   gap: 2,
                   zIndex: 2,
                 }}>
-                  <IconButton onClick={() => { prevHero(); }} sx={{ color: '#111', bgcolor: '#fff', '&:hover': { bgcolor: '#eee', color: '#111' }, width: 44, height: 44, border: '1.5px solid #222' }}>
-                    <ChevronLeft sx={{ fontSize: 32 }} />
+                  <IconButton
+                    onClick={() => prevHero()}
+                    sx={{
+                      position: 'absolute',
+                      left: { xs: 0, sm: -40 },
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      bgcolor: 'rgba(0, 0, 0, 0.5)',
+                      color: 'white',
+                      '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' },
+                      width: { xs: 24, sm: 40 },
+                      height: { xs: 24, sm: 40 },
+                      zIndex: 2
+                    }}
+                  >
+                    <ChevronLeft sx={{ fontSize: { xs: 16, sm: 24 } }} />
                   </IconButton>
-                  <Box sx={{ display: 'flex', gap: 1, mx: 2 }}>
-                    {heroCarouselSlides.map((_, idx) => (
-                      <Box key={idx} sx={{ width: 14, height: 14, borderRadius: '50%', bgcolor: idx === heroIndex ? '#111' : '#bbb', border: idx === heroIndex ? '2px solid #111' : '2px solid #bbb', transition: 'bgcolor 0.2s, border 0.2s' }} />
+                  <IconButton
+                    onClick={() => nextHero()}
+                    sx={{
+                      position: 'absolute',
+                      right: { xs: 0, sm: -40 },
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      bgcolor: 'rgba(0, 0, 0, 0.5)',
+                      color: 'white',
+                      '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' },
+                      width: { xs: 24, sm: 40 },
+                      height: { xs: 24, sm: 40 },
+                      zIndex: 2
+                    }}
+                  >
+                    <ChevronRight sx={{ fontSize: { xs: 16, sm: 24 } }} />
+                  </IconButton>
+                  <Box sx={{ 
+                    position: 'absolute', 
+                    bottom: { xs: 4, sm: 16 }, 
+                    left: '50%', 
+                    transform: 'translateX(-50%)',
+                    display: 'flex',
+                    gap: { xs: 0.5, sm: 1 },
+                    zIndex: 2
+                  }}>
+                    {Array.from({ length: 3 }).map((_, index) => (
+                      <Box
+                        key={index}
+                        onClick={() => setHeroIndex(index)}
+                        sx={{
+                          width: { xs: 4, sm: 8 },
+                          height: { xs: 4, sm: 8 },
+                          borderRadius: '50%',
+                          bgcolor: heroIndex === index ? 'white' : 'rgba(255, 255, 255, 0.5)',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease'
+                        }}
+                      />
                     ))}
                   </Box>
-                  <IconButton onClick={() => { nextHero(); }} sx={{ color: '#111', bgcolor: '#fff', '&:hover': { bgcolor: '#eee', color: '#111' }, width: 44, height: 44, border: '1.5px solid #222' }}>
-                    <ChevronRight sx={{ fontSize: 32 }} />
-                  </IconButton>
                 </Box>
               </Box>
             </Grid>
