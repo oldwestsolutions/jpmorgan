@@ -291,8 +291,8 @@ const HomePage: React.FC = () => {
                     <Paper elevation={0} sx={{
                       bgcolor: '#fff',
                       borderRadius: 10,
-                      p: { xs: 3, md: 7 },
-                      minHeight: { xs: 220, md: 340 },
+                      p: { xs: 2, md: 7 },
+                      minHeight: { xs: 180, md: 340 },
                       width: '100%',
                       maxWidth: 520,
                       textAlign: 'center',
@@ -305,9 +305,10 @@ const HomePage: React.FC = () => {
                       background: '#fff',
                       border: '1.5px solid #222',
                       '@media (max-width: 600px)': {
-                        bgcolor: '#1a1a1a',
-                        color: '#fff',
-                        border: '1.5px solid #333'
+                        bgcolor: '#fff',
+                        color: '#000',
+                        border: '1.5px solid #222',
+                        boxShadow: '0 4px 24px #0008'
                       }
                     }}>
                       <Box sx={{ 
@@ -317,39 +318,39 @@ const HomePage: React.FC = () => {
                         alignItems: 'center',
                         '@media (max-width: 600px)': {
                           '& svg': {
-                            color: '#fff !important'
+                            color: '#111 !important'
                           }
                         }
                       }}>
                         {React.cloneElement(heroCarouselSlides[heroIndex].icon, { 
                           color: 'inherit', 
                           sx: { 
-                            fontSize: 56, 
+                            fontSize: { xs: 40, md: 56 }, 
                             color: '#111',
                             mb: 1,
                             '@media (max-width: 600px)': {
-                              color: '#fff !important'
+                              color: '#111 !important'
                             }
                           } 
                         })}
                       </Box>
                       <Typography variant="h4" sx={{ 
                         fontWeight: 800, 
-                        color: 'black', 
+                        color: '#000', 
                         mb: 2, 
-                        fontSize: { xs: 22, md: 34 },
+                        fontSize: { xs: 18, md: 34 },
                         '@media (max-width: 600px)': {
-                          color: '#fff'
+                          color: '#000'
                         }
                       }}>
                         {heroCarouselSlides[heroIndex].title}
                       </Typography>
                       <Typography variant="h6" sx={{ 
-                        fontSize: { xs: 14, md: 20 }, 
+                        fontSize: { xs: 12, md: 20 }, 
                         fontWeight: 500, 
-                        color: 'black',
+                        color: '#000',
                         '@media (max-width: 600px)': {
-                          color: '#fff'
+                          color: '#000'
                         }
                       }}>
                         {heroCarouselSlides[heroIndex].desc}
@@ -359,11 +360,12 @@ const HomePage: React.FC = () => {
                 </AnimatePresence>
                 <Box sx={{ 
                   position: 'absolute', 
-                  bottom: 16, 
+                  bottom: { xs: 8, sm: 16 }, 
                   left: '50%', 
                   transform: 'translateX(-50%)',
                   display: 'flex',
-                  gap: 1.5
+                  gap: 1.5,
+                  zIndex: 10
                 }}>
                   {heroCarouselSlides.map((_, index) => (
                     <Box
@@ -373,9 +375,14 @@ const HomePage: React.FC = () => {
                         width: 10,
                         height: 10,
                         borderRadius: '50%',
-                        bgcolor: heroIndex === index ? '#43ea4a' : 'rgba(255,255,255,0.5)',
+                        bgcolor: heroIndex === index ? '#43ea4a' : 'rgba(255,255,255,0.8)',
                         cursor: 'pointer',
-                        transition: 'all 0.3s ease'
+                        transition: 'all 0.3s ease',
+                        boxShadow: '0 0 8px rgba(0,0,0,0.3)',
+                        '&:hover': {
+                          bgcolor: heroIndex === index ? '#43ea4a' : 'rgba(255,255,255,1)',
+                          transform: 'scale(1.1)'
+                        }
                       }}
                     />
                   ))}
