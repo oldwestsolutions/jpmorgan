@@ -259,22 +259,22 @@ const HomePage: React.FC = () => {
               <Box sx={{ 
                 position: 'relative', 
                 width: '100%', 
-                height: { xs: 280, md: 380 }, 
+                height: { xs: 320, md: 380 }, 
                 display: 'flex', 
                 alignItems: 'center', 
-                justifyContent: 'center' 
+                justifyContent: 'center',
+                px: { xs: 2, sm: 3, md: 4 }
               }}>
                 {/* Carousel Card with smooth transition */}
                 <Box sx={{ 
                   position: 'relative', 
                   width: '100%', 
-                  maxWidth: { xs: 300, sm: 400, md: 480 }, 
-                  minHeight: { xs: 220, md: 320 }, 
+                  maxWidth: { xs: '100%', sm: 400, md: 480 }, 
+                  minHeight: { xs: 280, md: 320 }, 
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'center', 
-                  overflow: 'hidden',
-                  px: { xs: 1, sm: 2 }
+                  overflow: 'hidden'
                 }}>
                   <Box
                     key={heroIndex}
@@ -302,10 +302,10 @@ const HomePage: React.FC = () => {
                     <Paper elevation={0} sx={{
                       bgcolor: '#fff',
                       borderRadius: 8,
-                      p: { xs: 2, sm: 3, md: 5 },
-                      minHeight: { xs: 200, md: 300 },
+                      p: { xs: 3, sm: 3, md: 5 },
+                      minHeight: { xs: 260, md: 300 },
                       width: '100%',
-                      maxWidth: { xs: 280, sm: 380, md: 460 },
+                      maxWidth: { xs: '100%', sm: 380, md: 460 },
                       textAlign: 'center',
                       display: 'flex',
                       flexDirection: 'column',
@@ -320,7 +320,7 @@ const HomePage: React.FC = () => {
                         {React.cloneElement(heroCarouselSlides[heroIndex].icon, { 
                           color: 'inherit', 
                           sx: { 
-                            fontSize: { xs: 36, sm: 42, md: 48 }, 
+                            fontSize: { xs: 40, sm: 42, md: 48 }, 
                             color: '#111', 
                             mb: 1 
                           } 
@@ -330,14 +330,15 @@ const HomePage: React.FC = () => {
                         fontWeight: 800, 
                         color: 'black', 
                         mb: 2, 
-                        fontSize: { xs: 16, sm: 20, md: 28 } 
+                        fontSize: { xs: 20, sm: 20, md: 28 } 
                       }}>
                         {heroCarouselSlides[heroIndex].title}
                       </Typography>
                       <Typography variant="h6" color="text.secondary" sx={{ 
-                        fontSize: { xs: 12, sm: 14, md: 18 }, 
+                        fontSize: { xs: 14, sm: 14, md: 18 }, 
                         fontWeight: 500, 
-                        color: 'black' 
+                        color: 'black',
+                        px: { xs: 1, sm: 2 }
                       }}>
                         {heroCarouselSlides[heroIndex].desc}
                       </Typography>
