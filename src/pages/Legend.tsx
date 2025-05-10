@@ -452,6 +452,89 @@ const Legend: React.FC = () => {
     </motion.div>
   );
 
+  const renderMobileView = () => (
+    <Box sx={{ p: 1 }}>
+      <Typography variant="h6" sx={{ mb: 1, fontWeight: 600, fontSize: '1.1rem' }}>
+        Robinhood Style View
+      </Typography>
+      <Box sx={{ mb: 1 }}>
+        <Typography variant="h5" sx={{ color: '#43ea4a', fontWeight: 700, fontSize: '1.5rem' }}>$1,234,567.89</Typography>
+        <Typography variant="body2" color="text.secondary">Total Account Value</Typography>
+      </Box>
+      <Box sx={{ height: 150, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
+        <Typography variant="body2" color="text.secondary">Graph Placeholder</Typography>
+      </Box>
+      <Box sx={{ display: 'flex', gap: 0.5, mb: 1, flexWrap: 'wrap' }}>
+        {['Daily', 'Weekly', 'Monthly', 'YTD', 'Year', '5Y'].map((period) => (
+          <Button 
+            key={period} 
+            variant="outlined" 
+            size="small"
+            sx={{ 
+              color: 'white', 
+              borderColor: '#333', 
+              '&:hover': { borderColor: '#43ea4a' },
+              fontSize: '0.75rem',
+              py: 0.5,
+              px: 1
+            }}
+          >
+            {period}
+          </Button>
+        ))}
+      </Box>
+    </Box>
+  );
+
+  const renderSearchResults = () => (
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Box sx={{ 
+        position: 'absolute', 
+        top: '100%', 
+        left: 0, 
+        right: 0, 
+        bgcolor: 'rgba(26, 26, 26, 0.95)', 
+        borderRadius: 1, 
+        border: '1px solid #333', 
+        zIndex: 1,
+        maxHeight: '80vh',
+        overflowY: 'auto'
+      }}>
+        {searchResults.map((result, index) => (
+          <Box 
+            key={index} 
+            sx={{ 
+              p: 1.5, 
+              borderBottom: '1px solid #333', 
+              '&:last-child': { borderBottom: 'none' }, 
+              cursor: 'pointer',
+              '&:hover': { bgcolor: '#2a2a2a' }
+            }} 
+            onClick={() => handleStockClick(result)}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+              <Box 
+                component="img"
+                src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" 
+                alt="Netflix Logo" 
+                sx={{ 
+                  mr: 1,
+                  height: { xs: 24, sm: 30 }
+                }}
+              />
+              <Typography variant="subtitle1" sx={{ ml: 'auto', color: '#43ea4a' }}>{result.price}</Typography>
+            </Box>
+            <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.875rem' }}>{result.description}</Typography>
+          </Box>
+        ))}
+      </Box>
+    </motion.div>
+  );
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -467,45 +550,36 @@ const Legend: React.FC = () => {
             borderBottom: '1px solid #333'
           }}
         >
-          <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Toolbar sx={{ minHeight: { xs: 56, sm: 64 } }}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: { xs: '1rem', sm: '1.25rem' } }}>
               Legend
             </Typography>
-            <Box sx={{ position: 'relative', mr: 2 }}>
+            <Box sx={{ position: 'relative', mr: 1 }}>
               <TextField
                 placeholder="Search..."
                 variant="outlined"
                 size="small"
-                sx={{ bgcolor: '#2a2a2a', borderRadius: 1, '& .MuiOutlinedInput-root': { color: 'white' } }}
+                sx={{ 
+                  bgcolor: '#2a2a2a', 
+                  borderRadius: 1, 
+                  '& .MuiOutlinedInput-root': { 
+                    color: 'white',
+                    fontSize: { xs: '0.875rem', sm: '1rem' }
+                  },
+                  width: { xs: 150, sm: 200 }
+                }}
                 onChange={(e) => handleSearch(e.target.value)}
               />
-              {searchResults.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Box sx={{ position: 'absolute', top: '100%', left: 0, right: 0, bgcolor: 'rgba(26, 26, 26, 0.9)', borderRadius: 1, border: '1px solid #333', zIndex: 1 }}>
-                    {searchResults.map((result, index) => (
-                      <Box key={index} sx={{ p: 1, borderBottom: '1px solid #333', '&:last-child': { borderBottom: 'none' }, cursor: 'pointer' }} onClick={() => handleStockClick(result)}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                          <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix Logo" style={{ marginRight: 8, height: 20 }} />
-                          <Typography variant="subtitle1" sx={{ ml: 'auto', color: '#43ea4a' }}>{result.price}</Typography>
-                        </Box>
-                        <Typography variant="body2" color="text.secondary">{result.description}</Typography>
-                      </Box>
-                    ))}
-                  </Box>
-                </motion.div>
-              )}
+              {searchResults.length > 0 && renderSearchResults()}
             </Box>
             <IconButton
-              size="large"
+              size="small"
               edge="end"
               onClick={handleProfileMenuOpen}
               color="inherit"
+              sx={{ ml: 0.5 }}
             >
-              <AccountCircle />
+              <AccountCircle sx={{ fontSize: { xs: 24, sm: 28 } }} />
             </IconButton>
             <Menu
               anchorEl={anchorEl}
@@ -524,11 +598,12 @@ const Legend: React.FC = () => {
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
             <IconButton
-              size="large"
+              size="small"
               edge="end"
               color="inherit"
+              sx={{ ml: 0.5 }}
             >
-              <Mail />
+              <Mail sx={{ fontSize: { xs: 24, sm: 28 } }} />
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -537,23 +612,42 @@ const Legend: React.FC = () => {
           component="main"
           sx={{
             flexGrow: 1,
-            p: 2,
-            mt: '64px',
-            height: mainContentHeight,
+            p: { xs: 1, sm: 2 },
+            mt: { xs: '56px', sm: '64px' },
+            height: { xs: 'calc(100vh - 56px)', sm: 'calc(100vh - 64px)' },
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
           }}
         >
           {selectedStock ? (
-            <Paper sx={{ p: 2, bgcolor: '#1a1a1a', color: 'white', border: '1px solid #333', flex: 1, minHeight: 0, overflow: 'auto' }}>
-              <Button variant="outlined" onClick={handleBackToAccount} sx={{ mb: 2, color: 'white', borderColor: '#333', '&:hover': { borderColor: '#43ea4a' } }}>
+            <Paper sx={{ p: { xs: 1, sm: 2 }, bgcolor: '#1a1a1a', color: 'white', border: '1px solid #333', flex: 1, minHeight: 0, overflow: 'auto' }}>
+              <Button 
+                variant="outlined" 
+                onClick={handleBackToAccount} 
+                size="small"
+                sx={{ 
+                  mb: 2, 
+                  color: 'white', 
+                  borderColor: '#333', 
+                  '&:hover': { borderColor: '#43ea4a' },
+                  fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                }}
+              >
                 Back to Account
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix Logo" style={{ marginRight: 8, height: 30 }} />
-                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                  <Box 
+                    component="img"
+                    src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" 
+                    alt="Netflix Logo" 
+                    sx={{ 
+                      mr: 1,
+                      height: { xs: 24, sm: 30 }
+                    }}
+                  />
+                  <Typography variant="h6" sx={{ fontWeight: 600, fontSize: { xs: '1rem', sm: '1.25rem' } }}>
                     {selectedStock.title}
                   </Typography>
                 </Box>
@@ -567,33 +661,45 @@ const Legend: React.FC = () => {
                   }}
                   onClick={() => handleViewChange('options')}
                 >
-                  <Typography variant="h6" sx={{ color: '#43ea4a', fontWeight: 600 }}>
+                  <Typography variant="h6" sx={{ color: '#43ea4a', fontWeight: 600, fontSize: { xs: '1rem', sm: '1.25rem' } }}>
                     $500.00
                   </Typography>
-                  <Typography variant="body2" sx={{ color: '#43ea4a' }}>
+                  <Typography variant="body2" sx={{ color: '#43ea4a', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                     +2.5%
                   </Typography>
                 </Box>
               </Box>
-              <Typography variant="body1" color="text.secondary">{selectedStock.description}</Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>{selectedStock.description}</Typography>
               <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
                 <IconButton 
                   onClick={() => handleViewChange('bio')}
-                  sx={{ color: 'white', '&:hover': { color: '#43ea4a' } }}
+                  sx={{ 
+                    color: 'white', 
+                    '&:hover': { color: '#43ea4a' },
+                    padding: { xs: 0.5, sm: 1 }
+                  }}
                 >
-                  <MenuBook />
+                  <MenuBook sx={{ fontSize: { xs: 20, sm: 24 } }} />
                 </IconButton>
                 <IconButton 
                   onClick={() => handleViewChange('options')}
-                  sx={{ color: 'white', '&:hover': { color: '#43ea4a' } }}
+                  sx={{ 
+                    color: 'white', 
+                    '&:hover': { color: '#43ea4a' },
+                    padding: { xs: 0.5, sm: 1 }
+                  }}
                 >
-                  <TimelineIcon />
+                  <TimelineIcon sx={{ fontSize: { xs: 20, sm: 24 } }} />
                 </IconButton>
                 <IconButton 
                   onClick={() => handleViewChange('news')}
-                  sx={{ color: 'white', '&:hover': { color: '#43ea4a' } }}
+                  sx={{ 
+                    color: 'white', 
+                    '&:hover': { color: '#43ea4a' },
+                    padding: { xs: 0.5, sm: 1 }
+                  }}
                 >
-                  <Article />
+                  <Article sx={{ fontSize: { xs: 20, sm: 24 } }} />
                 </IconButton>
               </Box>
               <AnimatePresence mode="wait">
@@ -604,72 +710,49 @@ const Legend: React.FC = () => {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <Grid container spacing={2} sx={{ mt: 2 }}>
-                      <Grid item xs={6}>
-                        <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
-                          <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>Stock Price Graph</Typography>
-                          <Box sx={{ height: 200, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <Typography variant="body1" color="text.secondary">Graph Placeholder</Typography>
+                    <Grid container spacing={{ xs: 1, sm: 2 }} sx={{ mt: 2 }}>
+                      <Grid item xs={12} sm={6}>
+                        <Box sx={{ p: { xs: 1, sm: 2 }, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+                          <Typography variant="h6" sx={{ mb: 1, fontWeight: 600, fontSize: { xs: '1rem', sm: '1.25rem' } }}>Stock Price Graph</Typography>
+                          <Box sx={{ height: { xs: 150, sm: 200 }, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <Typography variant="body2" color="text.secondary">Graph Placeholder</Typography>
                           </Box>
                         </Box>
                       </Grid>
-                      <Grid item xs={6}>
-                        <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
-                          <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>Options Greeks</Typography>
+                      <Grid item xs={12} sm={6}>
+                        <Box sx={{ p: { xs: 1, sm: 2 }, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+                          <Typography variant="h6" sx={{ mb: 1, fontWeight: 600, fontSize: { xs: '1rem', sm: '1.25rem' } }}>Options Greeks</Typography>
                           <Grid container spacing={1}>
-                            <Grid item xs={6}>
-                              <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Typography variant="body2" color="text.secondary">Delta: 0.65</Typography>
-                              </Box>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Typography variant="body2" color="text.secondary">Gamma: 0.02</Typography>
-                              </Box>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Typography variant="body2" color="text.secondary">Theta: -0.05</Typography>
-                              </Box>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Typography variant="body2" color="text.secondary">Vega: 0.10</Typography>
-                              </Box>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Typography variant="body2" color="text.secondary">Rho: 0.01</Typography>
-                              </Box>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Typography variant="body2" color="text.secondary">Open Interest: 1000</Typography>
-                              </Box>
-                            </Grid>
+                            {[
+                              { label: 'Delta', value: '0.65' },
+                              { label: 'Gamma', value: '0.02' },
+                              { label: 'Theta', value: '-0.05' },
+                              { label: 'Vega', value: '0.10' },
+                              { label: 'Rho', value: '0.01' },
+                              { label: 'Open Interest', value: '1000' }
+                            ].map((greek) => (
+                              <Grid item xs={6} key={greek.label}>
+                                <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                  <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
+                                    {greek.label}: {greek.value}
+                                  </Typography>
+                                </Box>
+                              </Grid>
+                            ))}
                           </Grid>
-                          <Button variant="outlined" sx={{ mt: 2, color: 'white', borderColor: '#333', '&:hover': { borderColor: '#43ea4a' } }}>
+                          <Button 
+                            variant="outlined" 
+                            size="small"
+                            sx={{ 
+                              mt: 2, 
+                              color: 'white', 
+                              borderColor: '#333', 
+                              '&:hover': { borderColor: '#43ea4a' },
+                              fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                            }}
+                          >
                             View Contracts for Sale
                           </Button>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
-                          <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>Business Model</Typography>
-                          <Typography variant="body1" color="text.secondary">
-                            Netflix's business model involves licensing, creating, and distributing content on its platform. The company has expanded its operations to include film and television production, as well as online distribution.
-                          </Typography>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
-                          <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>Key Points</Typography>
-                          <ul style={{ color: 'text.secondary', paddingLeft: 20 }}>
-                            <li>Netflix is a leading streaming service with over 200 million paid memberships.</li>
-                            <li>The company produces its own content, known as Netflix Originals.</li>
-                            <li>Netflix operates in over 190 countries.</li>
-                            <li>The company was founded in 1997 and has since revolutionized the entertainment industry.</li>
-                          </ul>
                         </Box>
                       </Grid>
                     </Grid>
@@ -681,24 +764,28 @@ const Legend: React.FC = () => {
               </AnimatePresence>
             </Paper>
           ) : (
-            <Paper sx={{ p: 2, bgcolor: '#1a1a1a', color: 'white', border: '1px solid #333', flex: 1, minHeight: 0, overflow: 'auto' }}>
-              <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
-                Robinhood Style View
-              </Typography>
-              <Box sx={{ mb: 2 }}>
-                <Typography variant="h4" sx={{ color: '#43ea4a', fontWeight: 700 }}>$1,234,567.89</Typography>
-                <Typography variant="subtitle1" color="text.secondary">Total Account Value</Typography>
-              </Box>
-              <Box sx={{ height: 200, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
-                <Typography variant="body1" color="text.secondary">Graph Placeholder</Typography>
-              </Box>
-              <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
-                {['Daily', 'Weekly', 'Monthly', 'YTD', 'Year', '5 Year'].map((period) => (
-                  <Button key={period} variant="outlined" sx={{ color: 'white', borderColor: '#333', '&:hover': { borderColor: '#43ea4a' } }}>
-                    {period}
-                  </Button>
-                ))}
-              </Box>
+            <Paper sx={{ p: { xs: 1, sm: 2 }, bgcolor: '#1a1a1a', color: 'white', border: '1px solid #333', flex: 1, minHeight: 0, overflow: 'auto' }}>
+              {isMobile ? renderMobileView() : (
+                <>
+                  <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
+                    Robinhood Style View
+                  </Typography>
+                  <Box sx={{ mb: 2 }}>
+                    <Typography variant="h4" sx={{ color: '#43ea4a', fontWeight: 700 }}>$1,234,567.89</Typography>
+                    <Typography variant="subtitle1" color="text.secondary">Total Account Value</Typography>
+                  </Box>
+                  <Box sx={{ height: 200, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
+                    <Typography variant="body1" color="text.secondary">Graph Placeholder</Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+                    {['Daily', 'Weekly', 'Monthly', 'YTD', 'Year', '5 Year'].map((period) => (
+                      <Button key={period} variant="outlined" sx={{ color: 'white', borderColor: '#333', '&:hover': { borderColor: '#43ea4a' } }}>
+                        {period}
+                      </Button>
+                    ))}
+                  </Box>
+                </>
+              )}
             </Paper>
           )}
         </Box>

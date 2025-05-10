@@ -192,8 +192,8 @@ const Newsletter: React.FC = () => {
               <Typography variant="h5" sx={{ color: '#bbb', mb: 3, textAlign: 'center', fontWeight: 600 }}>
                 Institutional-Grade Trading Intelligence
               </Typography>
-            </Box>
-            <Grid container spacing={3}>
+                      </Box>
+              <Grid container spacing={3}>
               {features.map((feature, idx) => (
                 <Grid item xs={12} sm={6} md={6} lg={4} key={feature.title}>
                   <Card sx={{ bgcolor: SECTION_BG, color: 'white', borderRadius: CARD_RADIUS, boxShadow: '0 4px 24px #0008', border: '1.5px solid #232425', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
@@ -215,13 +215,13 @@ const Newsletter: React.FC = () => {
                   </Card>
                 </Grid>
               ))}
-            </Grid>
+                </Grid>
             <Box sx={{ mt: 4 }}>
               <Paper elevation={0} sx={{ bgcolor: 'transparent', color: '#bbb', p: 2, borderRadius: 2, textAlign: 'center' }}>
                 <Typography variant="body2">
                   Plus alerts for: Box Spreads, Jelly Rolls, Collars, Protective Puts, Covered Calls, Cash-Secured Puts, Vertical Spreads, Horizontal Spreads, Ichimoku Cloud, Keltner Channels, Fibonacci Time Zones, Harmonic Patterns, Wyckoff Method, Volume Delta, Order Flow Analysis, and more.
-                </Typography>
-              </Paper>
+              </Typography>
+            </Paper>
             </Box>
           </Grid>
 
