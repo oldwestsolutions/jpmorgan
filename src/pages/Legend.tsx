@@ -171,7 +171,7 @@ const Legend: React.FC = () => {
       if (isMobile) {
         const viewport = document.querySelector('meta[name="viewport"]');
         if (viewport) {
-          viewport.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1');
+          viewport.setAttribute('content', 'width=device-width, initial-scale=0.9, maximum-scale=0.9');
         }
       }
     } else {
@@ -207,7 +207,7 @@ const Legend: React.FC = () => {
     if (isMobile) {
       const viewport = document.querySelector('meta[name="viewport"]');
       if (viewport) {
-        viewport.setAttribute('content', 'width=device-width, initial-scale=1');
+        viewport.setAttribute('content', 'width=device-width, initial-scale=0.9');
       }
     }
   };
@@ -1087,7 +1087,7 @@ const Legend: React.FC = () => {
             p: { xs: 1, sm: 2 },
             mt: { xs: '56px', sm: '64px' },
             mb: { xs: 1, sm: 2 },
-            height: { xs: 'calc(100vh - 68px)', sm: 'calc(100vh - 76px)' },
+            height: { xs: 'calc(100vh - 64px)', sm: 'calc(100vh - 72px)' },
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
@@ -1280,10 +1280,19 @@ const Legend: React.FC = () => {
                         <Typography variant="h4" sx={{ color: '#43ea4a', fontWeight: 700 }}>$1,234,567.89</Typography>
                         <Typography variant="subtitle1" color="text.secondary">Total Account Value</Typography>
                       </Box>
-                      <Box sx={{ height: 200, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
+                      <Box sx={{ 
+                        flex: 1,
+                        bgcolor: '#2a2a2a', 
+                        borderRadius: 1, 
+                        border: '1px solid #333', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center', 
+                        mb: 2 
+                      }}>
                         <Typography variant="body1" color="text.secondary">Graph Placeholder</Typography>
                       </Box>
-                      <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+                      <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
                         {['Daily', 'Weekly', 'Monthly', 'YTD', 'Year', '5 Year'].map((period) => (
                           <Button key={period} variant="outlined" sx={{ color: 'white', borderColor: '#333', '&:hover': { borderColor: '#43ea4a' } }}>
                             {period}
