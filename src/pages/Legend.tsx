@@ -19,6 +19,8 @@ import {
   Avatar,
   Menu,
   MenuItem,
+  Button,
+  TextField,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -34,8 +36,10 @@ import {
   Timeline,
   Assessment,
   AccountCircle,
+  Mail,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const DRAWER_WIDTH = 240;
 
@@ -132,159 +136,245 @@ const Legend: React.FC = () => {
   );
 
   const mainContentHeight = 'calc(100vh - 64px)'; // 64px for AppBar
-  const topMovers = [
-    { symbol: 'NVDA', change: '+4.12%' },
-    { symbol: 'META', change: '+3.45%' },
-    { symbol: 'AMD', change: '+2.98%' },
-    { symbol: 'NFLX', change: '-1.23%' },
-    { symbol: 'BABA', change: '-2.11%' },
-  ];
+
+  const [searchResults, setSearchResults] = useState<{ title: string; description: string; price?: string }[]>([]);
+  const [selectedStock, setSelectedStock] = useState<{ title: string; description: string; price?: string } | null>(null);
+
+  const handleSearch = (query: string) => {
+    if (query.toLowerCase() === 'netflix') {
+      setSearchResults([
+        { title: '', description: '**Netflix** is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices.', price: '$500.00' }
+      ]);
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  const handleStockClick = (stock: { title: string; description: string; price?: string }) => {
+    setSelectedStock(stock);
+    setSearchResults([]); // Clear search results on click
+  };
+
+  const handleBackToAccount = () => {
+    setSelectedStock(null);
+  };
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: '#121212', overflow: 'hidden' }}>
-      <AppBar
-        position="fixed"
-        sx={{
-          width: '100%',
-          bgcolor: '#1a1a1a',
-          borderBottom: '1px solid #333'
-        }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Box sx={{ flexGrow: 1 }} />
-          <IconButton
-            size="large"
-            edge="end"
-            onClick={handleProfileMenuOpen}
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleProfileMenuClose}
-            sx={{
-              '& .MuiPaper-root': {
-                bgcolor: '#1a1a1a',
-                color: 'white',
-                mt: 1.5,
-              }
-            }}
-          >
-            <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleProfileMenuClose}>Settings</MenuItem>
-            <Divider sx={{ bgcolor: '#333' }} />
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </Menu>
-        </Toolbar>
-      </AppBar>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Box sx={{ minHeight: '100vh', bgcolor: '#121212', overflow: 'hidden' }}>
+        <AppBar
+          position="fixed"
+          sx={{
+            width: '100%',
+            bgcolor: '#1a1a1a',
+            borderBottom: '1px solid #333'
+          }}
+        >
+          <Toolbar>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Legend
+            </Typography>
+            <Box sx={{ position: 'relative', mr: 2 }}>
+              <TextField
+                placeholder="Search..."
+                variant="outlined"
+                size="small"
+                sx={{ bgcolor: '#2a2a2a', borderRadius: 1, '& .MuiOutlinedInput-root': { color: 'white' } }}
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+              {searchResults.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Box sx={{ position: 'absolute', top: '100%', left: 0, right: 0, bgcolor: 'rgba(26, 26, 26, 0.9)', borderRadius: 1, border: '1px solid #333', zIndex: 1 }}>
+                    {searchResults.map((result, index) => (
+                      <Box key={index} sx={{ p: 1, borderBottom: '1px solid #333', '&:last-child': { borderBottom: 'none' }, cursor: 'pointer' }} onClick={() => handleStockClick(result)}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix Logo" style={{ marginRight: 8, height: 20 }} />
+                          <Typography variant="subtitle1" sx={{ ml: 'auto', color: '#43ea4a' }}>{result.price}</Typography>
+                        </Box>
+                        <Typography variant="body2" color="text.secondary">{result.description}</Typography>
+                      </Box>
+                    ))}
+                  </Box>
+                </motion.div>
+              )}
+            </Box>
+            <IconButton
+              size="large"
+              edge="end"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleProfileMenuClose}
+              sx={{
+                '& .MuiPaper-root': {
+                  bgcolor: '#1a1a1a',
+                  color: 'white',
+                  mt: 1.5,
+                }
+              }}
+            >
+              <MenuItem onClick={handleProfileMenuClose}>Settings</MenuItem>
+              <Divider sx={{ bgcolor: '#333' }} />
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </Menu>
+            <IconButton
+              size="large"
+              edge="end"
+              color="inherit"
+            >
+              <Mail />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
 
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 2,
-          mt: '64px',
-          height: mainContentHeight,
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <Grid container spacing={2} sx={{ height: '100%' }}>
-          {/* Portfolio Summary */}
-          <Grid item xs={6} sm={6} md={6} sx={{ height: '50%', display: 'flex', flexDirection: 'column' }}>
-            <Paper sx={{ p: 2, bgcolor: '#1a1a1a', color: 'white', border: '1px solid #333', flex: 1, minHeight: 0, overflow: 'auto' }}>
-              <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
-                Portfolio Summary
-              </Typography>
-              <Grid container spacing={1}>
-                <Grid item xs={6}>
-                  <Box sx={{ p: 1, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
-                    <Typography variant="subtitle2" color="text.secondary">Total Value</Typography>
-                    <Typography variant="h5" sx={{ color: '#43ea4a', fontWeight: 700 }}>$1,234,567.89</Typography>
-                  </Box>
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            p: 2,
+            mt: '64px',
+            height: mainContentHeight,
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {selectedStock ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Paper sx={{ p: 2, bgcolor: '#1a1a1a', color: 'white', border: '1px solid #333', flex: 1, minHeight: 0, overflow: 'auto' }}>
+                <Button variant="outlined" onClick={handleBackToAccount} sx={{ mb: 2, color: 'white', borderColor: '#333', '&:hover': { borderColor: '#43ea4a' } }}>
+                  Back to Account
+                </Button>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix Logo" style={{ marginRight: 8, height: 30 }} />
+                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                    {selectedStock.title}
+                  </Typography>
+                </Box>
+                <Typography variant="body1" color="text.secondary">{selectedStock.description}</Typography>
+                <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+                  <Button variant="outlined" sx={{ color: 'white', borderColor: '#333', '&:hover': { borderColor: '#43ea4a' } }}>Bio</Button>
+                  <Button variant="outlined" sx={{ color: 'white', borderColor: '#333', '&:hover': { borderColor: '#43ea4a' } }}>Future</Button>
+                  <Button variant="outlined" sx={{ color: 'white', borderColor: '#333', '&:hover': { borderColor: '#43ea4a' } }}>News</Button>
+                </Box>
+                <Grid container spacing={2} sx={{ mt: 2 }}>
+                  <Grid item xs={6}>
+                    <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+                      <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>Stock Price Graph</Typography>
+                      <Box sx={{ height: 200, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Typography variant="body1" color="text.secondary">Graph Placeholder</Typography>
+                      </Box>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+                      <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>Options Greeks</Typography>
+                      <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                          <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <Typography variant="body2" color="text.secondary">Delta: 0.65</Typography>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <Typography variant="body2" color="text.secondary">Gamma: 0.02</Typography>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <Typography variant="body2" color="text.secondary">Theta: -0.05</Typography>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <Typography variant="body2" color="text.secondary">Vega: 0.10</Typography>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <Typography variant="body2" color="text.secondary">Rho: 0.01</Typography>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <Typography variant="body2" color="text.secondary">Open Interest: 1000</Typography>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                      <Button variant="outlined" sx={{ mt: 2, color: 'white', borderColor: '#333', '&:hover': { borderColor: '#43ea4a' } }}>
+                        View Contracts for Sale
+                      </Button>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+                      <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>Business Model</Typography>
+                      <Typography variant="body1" color="text.secondary">
+                        Netflix's business model involves licensing, creating, and distributing content on its platform. The company has expanded its operations to include film and television production, as well as online distribution.
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+                      <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>Key Points</Typography>
+                      <ul style={{ color: 'text.secondary', paddingLeft: 20 }}>
+                        <li>Netflix is a leading streaming service with over 200 million paid memberships.</li>
+                        <li>The company produces its own content, known as Netflix Originals.</li>
+                        <li>Netflix operates in over 190 countries.</li>
+                        <li>The company was founded in 1997 and has since revolutionized the entertainment industry.</li>
+                      </ul>
+                    </Box>
+                  </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                  <Box sx={{ p: 1, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
-                    <Typography variant="subtitle2" color="text.secondary">24h Change</Typography>
-                    <Typography variant="h5" sx={{ color: '#43ea4a', fontWeight: 700 }}>+2.34%</Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box sx={{ p: 1, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
-                    <Typography variant="subtitle2" color="text.secondary">Open Positions</Typography>
-                    <Typography variant="h5" sx={{ color: 'white', fontWeight: 700 }}>12</Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box sx={{ p: 1, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
-                    <Typography variant="subtitle2" color="text.secondary">Pending Orders</Typography>
-                    <Typography variant="h5" sx={{ color: 'white', fontWeight: 700 }}>3</Typography>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Paper>
-          </Grid>
-          {/* Recent Activity */}
-          <Grid item xs={6} sm={6} md={6} sx={{ height: '50%', display: 'flex', flexDirection: 'column' }}>
-            <Paper sx={{ p: 2, bgcolor: '#1a1a1a', color: 'white', border: '1px solid #333', flex: 1, minHeight: 0, overflow: 'auto' }}>
-              <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
-                Recent Activity
-              </Typography>
-              <List dense>
-                {[1, 2, 3, 4, 5].map((item) => (
-                  <ListItem key={item} sx={{ borderBottom: '1px solid #333', '&:last-child': { borderBottom: 'none' } }}>
-                    <ListItemIcon>
-                      <TrendingUp sx={{ color: '#43ea4a' }} />
-                    </ListItemIcon>
-                    <ListItemText primary="AAPL Call Option" secondary="Bought 5 contracts @ $2.50" />
-                  </ListItem>
-                ))}
-              </List>
-            </Paper>
-          </Grid>
-          {/* Market Overview */}
-          <Grid item xs={6} sm={6} md={6} sx={{ height: '50%', display: 'flex', flexDirection: 'column' }}>
-            <Paper sx={{ p: 2, bgcolor: '#1a1a1a', color: 'white', border: '1px solid #333', flex: 1, minHeight: 0, overflow: 'auto' }}>
-              <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
-                Market Overview
-              </Typography>
-              <Box sx={{ height: 120, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Typography variant="body1" color="text.secondary">Chart Placeholder</Typography>
-              </Box>
-            </Paper>
-          </Grid>
-          {/* Top Movers */}
-          <Grid item xs={6} sm={6} md={6} sx={{ height: '50%', display: 'flex', flexDirection: 'column' }}>
-            <Paper sx={{ p: 2, bgcolor: '#1a1a1a', color: 'white', border: '1px solid #333', flex: 1, minHeight: 0, overflow: 'auto' }}>
-              <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
-                Top Movers
-              </Typography>
-              <List dense>
-                {topMovers.map((mover) => (
-                  <ListItem key={mover.symbol} sx={{ borderBottom: '1px solid #333', '&:last-child': { borderBottom: 'none' } }}>
-                    <ListItemText primary={mover.symbol} />
-                    <Typography variant="body2" sx={{ color: mover.change.startsWith('+') ? '#43ea4a' : '#ff5252', fontWeight: 700 }}>
-                      {mover.change}
-                    </Typography>
-                  </ListItem>
-                ))}
-              </List>
-            </Paper>
-          </Grid>
-        </Grid>
+              </Paper>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Paper sx={{ p: 2, bgcolor: '#1a1a1a', color: 'white', border: '1px solid #333', flex: 1, minHeight: 0, overflow: 'auto' }}>
+                <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
+                  Robinhood Style View
+                </Typography>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="h4" sx={{ color: '#43ea4a', fontWeight: 700 }}>$1,234,567.89</Typography>
+                  <Typography variant="subtitle1" color="text.secondary">Total Account Value</Typography>
+                </Box>
+                <Box sx={{ height: 200, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
+                  <Typography variant="body1" color="text.secondary">Graph Placeholder</Typography>
+                </Box>
+                <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+                  {['Daily', 'Weekly', 'Monthly', 'YTD', 'Year', '5 Year'].map((period) => (
+                    <Button key={period} variant="outlined" sx={{ color: 'white', borderColor: '#333', '&:hover': { borderColor: '#43ea4a' } }}>
+                      {period}
+                    </Button>
+                  ))}
+                </Box>
+              </Paper>
+            </motion.div>
+          )}
+        </Box>
       </Box>
-    </Box>
+    </motion.div>
   );
 };
 
