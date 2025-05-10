@@ -3,7 +3,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import LegendPage from './pages/LegendPage';
+import Legend from './pages/Legend';
 import LoginPage from './pages/LoginPage';
 import Newsletter from './pages/Newsletter';
 import News from './pages/News';
@@ -75,7 +75,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/legend" element={<LegendPage />} />
+          <Route path="/legend" element={<Legend />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/newsletter" element={<Newsletter />} />
           <Route path="/news" element={<News />} />

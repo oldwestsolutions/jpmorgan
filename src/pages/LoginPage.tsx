@@ -1,7 +1,17 @@
 import React from 'react';
 import { Box, Button, Container, Paper, TextField, Typography, Link } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Allow any credentials to login
+    console.log('Login submitted, navigating to /legend');
+    navigate('/legend');
+  };
+
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Container maxWidth="xs">
@@ -12,15 +22,31 @@ const LoginPage: React.FC = () => {
           <Typography variant="h6" sx={{ mb: 3, color: 'white', textAlign: 'center' }}>
             Login to your account
           </Typography>
-          <Box component="form" noValidate autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box component="form" onSubmit={handleLogin} noValidate autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <TextField
               label="Email"
               type="email"
               variant="outlined"
               fullWidth
               required
-              InputProps={{ style: { color: 'white', background: '#222' } }}
-              InputLabelProps={{ style: { color: '#bbb' } }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  color: 'white',
+                  bgcolor: '#222',
+                  '& fieldset': {
+                    borderColor: '#444',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#666',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#888',
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#bbb',
+                },
+              }}
             />
             <TextField
               label="Password"
@@ -28,10 +54,27 @@ const LoginPage: React.FC = () => {
               variant="outlined"
               fullWidth
               required
-              InputProps={{ style: { color: 'white', background: '#222' } }}
-              InputLabelProps={{ style: { color: '#bbb' } }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  color: 'white',
+                  bgcolor: '#222',
+                  '& fieldset': {
+                    borderColor: '#444',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#666',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#888',
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#bbb',
+                },
+              }}
             />
             <Button
+              type="submit"
               variant="contained"
               color="primary"
               fullWidth
