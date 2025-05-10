@@ -160,9 +160,20 @@ const Legend: React.FC = () => {
   const handleSearch = (query: string) => {
     if (query.toLowerCase() === 'netflix') {
       setSearchResults([
-        { title: '', description: '**Netflix** is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices.', price: '$500.00' }
+        { 
+          title: '', 
+          description: '**Netflix** is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices.', 
+          price: '$500.00' 
+        }
       ]);
       setIsSearchOpen(true);
+      // Prevent zoom on mobile
+      if (isMobile) {
+        const viewport = document.querySelector('meta[name="viewport"]');
+        if (viewport) {
+          viewport.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1');
+        }
+      }
     } else {
       setSearchResults([]);
       setIsSearchOpen(false);
@@ -190,7 +201,15 @@ const Legend: React.FC = () => {
 
   const handleStockClick = (stock: { title: string; description: string; price?: string }) => {
     setSelectedStock(stock);
-    setSearchResults([]); // Clear search results on click
+    setSearchResults([]);
+    setIsSearchOpen(false);
+    // Reset viewport zoom
+    if (isMobile) {
+      const viewport = document.querySelector('meta[name="viewport"]');
+      if (viewport) {
+        viewport.setAttribute('content', 'width=device-width, initial-scale=1');
+      }
+    }
   };
 
   const handleBackToAccount = () => {
@@ -659,7 +678,7 @@ const Legend: React.FC = () => {
         borderRadius: 1, 
         border: '1px solid #333', 
         zIndex: 1,
-        maxHeight: '80vh',
+        maxHeight: { xs: '60vh', sm: '80vh' },
         overflowY: 'auto',
         backdropFilter: 'blur(10px)',
         boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
@@ -668,7 +687,7 @@ const Legend: React.FC = () => {
           <Box 
             key={index} 
             sx={{ 
-              p: 1.5, 
+              p: { xs: 1, sm: 1.5 }, 
               borderBottom: '1px solid #333', 
               '&:last-child': { borderBottom: 'none' }, 
               cursor: 'pointer',
@@ -676,19 +695,48 @@ const Legend: React.FC = () => {
             }} 
             onClick={() => handleStockClick(result)}
           >
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              mb: { xs: 0.5, sm: 1 },
+              gap: 1
+            }}>
               <Box 
                 component="img"
                 src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" 
                 alt="Netflix Logo" 
                 sx={{ 
-                  mr: 1,
-                  height: { xs: 24, sm: 30 }
+                  height: { xs: 20, sm: 30 },
+                  width: 'auto'
                 }}
               />
-              <Typography variant="caption" sx={{ ml: 'auto', color: '#43ea4a', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>{result.price}</Typography>
+              <Typography 
+                variant="caption" 
+                sx={{ 
+                  ml: 'auto', 
+                  color: '#43ea4a', 
+                  fontSize: { xs: '0.7rem', sm: '0.875rem' },
+                  fontWeight: 500
+                }}
+              >
+                {result.price}
+              </Typography>
             </Box>
-            <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.875rem' }}>{result.description}</Typography>
+            <Typography 
+              variant="body2" 
+              color="text.secondary" 
+              sx={{ 
+                fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                lineHeight: 1.4,
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }}
+            >
+              {result.description}
+            </Typography>
           </Box>
         ))}
       </Box>
