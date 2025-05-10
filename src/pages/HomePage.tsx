@@ -308,7 +308,9 @@ const HomePage: React.FC = () => {
                         bgcolor: '#fff !important',
                         color: '#000 !important',
                         border: '1.5px solid #222',
-                        boxShadow: '0 4px 24px #0008'
+                        boxShadow: '0 4px 24px #0008',
+                        position: 'relative',
+                        zIndex: 2
                       }
                     }}>
                       <Box sx={{ 
@@ -394,7 +396,22 @@ const HomePage: React.FC = () => {
       </Box>
 
       {/* Newsletter Modal with Paywall */}
-      <Dialog open={newsletterOpen} onClose={handleNewsletterClose} maxWidth="xs" fullWidth>
+      <Dialog 
+        open={newsletterOpen} 
+        onClose={handleNewsletterClose} 
+        maxWidth="xs" 
+        fullWidth
+        sx={{
+          '& .MuiDialog-paper': {
+            '@media (max-width: 600px)': {
+              margin: '16px',
+              maxHeight: 'calc(100% - 32px)',
+              position: 'absolute',
+              top: '10%'
+            }
+          }
+        }}
+      >
         <DialogTitle sx={{ fontWeight: 800, fontFamily: 'Georgia, serif', color: '#111', textAlign: 'center', pt: 4 }}>
           RobberBaron Newsletter
         </DialogTitle>
