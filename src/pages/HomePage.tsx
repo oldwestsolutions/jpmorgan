@@ -51,6 +51,7 @@ import { useNavigate } from 'react-router-dom';
 import { keyframes } from '@emotion/react';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from '@mui/material';
+import { AnimatePresence, motion } from 'framer-motion';
 
 // Animation keyframes for chart line and candlesticks
 const glow = keyframes`
@@ -255,30 +256,36 @@ const HomePage: React.FC = () => {
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Box sx={{ position: 'relative', width: '100%', height: { xs: 320, md: 420 }, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {/* Carousel Card with smooth transition */}
-                <Box sx={{ position: 'relative', width: '100%', maxWidth: 520, minHeight: { xs: 260, md: 340 }, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                  <Box
+              <Box sx={{ 
+                position: 'relative',
+                height: { xs: '220px', sm: '400px' },
+                width: '100%',
+                overflow: 'hidden',
+                borderRadius: 1,
+                bgcolor: '#1a1a1a'
+              }}>
+                <AnimatePresence mode="wait">
+                  <motion.div
                     key={heroIndex}
-                    sx={{
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
+                    transition={{ duration: 0.5 }}
+                    style={{ 
                       position: 'absolute',
-                      width: '100%',
-                      height: '100%',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url(${heroCarouselSlides[heroIndex].icon})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
                       display: 'flex',
-                      alignItems: 'center',
+                      flexDirection: 'column',
                       justifyContent: 'center',
-                      transition: 'opacity 1.2s cubic-bezier(.4,1.4,.6,1), transform 1.2s cubic-bezier(.4,1.4,.6,1)',
-                      opacity: 1,
-                      zIndex: 1,
-                      animation: `${carouselDirection === 'right' ? 'fadeInRight' : 'fadeInLeft'} 1.2s`,
-                      '@keyframes fadeInRight': {
-                        from: { opacity: 0, transform: 'translateX(80px) scale(0.97)' },
-                        to: { opacity: 1, transform: 'translateX(0) scale(1)' },
-                      },
-                      '@keyframes fadeInLeft': {
-                        from: { opacity: 0, transform: 'translateX(-80px) scale(0.97)' },
-                        to: { opacity: 1, transform: 'translateX(0) scale(1)' },
-                      },
+                      alignItems: 'center',
+                      padding: '2rem',
+                      textAlign: 'center'
                     }}
                   >
                     <Paper elevation={0} sx={{
@@ -297,89 +304,81 @@ const HomePage: React.FC = () => {
                       position: 'relative',
                       background: '#fff',
                       border: '1.5px solid #222',
+                      '@media (max-width: 600px)': {
+                        bgcolor: '#1a1a1a',
+                        color: '#fff',
+                        border: '1.5px solid #333'
+                      }
                     }}>
-                      <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        {React.cloneElement(heroCarouselSlides[heroIndex].icon, { color: 'inherit', sx: { fontSize: 56, color: '#111', mb: 1 } })}
+                      <Box sx={{ 
+                        mb: 2, 
+                        display: 'flex', 
+                        justifyContent: 'center', 
+                        alignItems: 'center',
+                        '@media (max-width: 600px)': {
+                          '& svg': {
+                            color: '#fff !important'
+                          }
+                        }
+                      }}>
+                        {React.cloneElement(heroCarouselSlides[heroIndex].icon, { 
+                          color: 'inherit', 
+                          sx: { 
+                            fontSize: 56, 
+                            color: '#111',
+                            mb: 1,
+                            '@media (max-width: 600px)': {
+                              color: '#fff !important'
+                            }
+                          } 
+                        })}
                       </Box>
-                      <Typography variant="h4" sx={{ fontWeight: 800, color: 'black', mb: 2, fontSize: { xs: 22, md: 34 } }}>
+                      <Typography variant="h4" sx={{ 
+                        fontWeight: 800, 
+                        color: 'black', 
+                        mb: 2, 
+                        fontSize: { xs: 22, md: 34 },
+                        '@media (max-width: 600px)': {
+                          color: '#fff'
+                        }
+                      }}>
                         {heroCarouselSlides[heroIndex].title}
                       </Typography>
-                      <Typography variant="h6" color="text.secondary" sx={{ fontSize: { xs: 14, md: 20 }, fontWeight: 500, color: 'black' }}>
+                      <Typography variant="h6" sx={{ 
+                        fontSize: { xs: 14, md: 20 }, 
+                        fontWeight: 500, 
+                        color: 'black',
+                        '@media (max-width: 600px)': {
+                          color: '#fff'
+                        }
+                      }}>
                         {heroCarouselSlides[heroIndex].desc}
                       </Typography>
                     </Paper>
-                  </Box>
-                </Box>
-                {/* Carousel Controls and Dots BELOW the card, arrows on either side of dots */}
-                <Box sx={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  bottom: { xs: -40, sm: -48, md: -56 },
+                  </motion.div>
+                </AnimatePresence>
+                <Box sx={{ 
+                  position: 'absolute', 
+                  bottom: 16, 
+                  left: '50%', 
+                  transform: 'translateX(-50%)',
                   display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: 2,
-                  zIndex: 2,
+                  gap: 1.5
                 }}>
-                  <IconButton
-                    onClick={() => prevHero()}
-                    sx={{
-                      position: 'absolute',
-                      left: { xs: 0, sm: -40 },
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      bgcolor: 'rgba(0, 0, 0, 0.5)',
-                      color: 'white',
-                      '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' },
-                      width: { xs: 24, sm: 40 },
-                      height: { xs: 24, sm: 40 },
-                      zIndex: 2
-                    }}
-                  >
-                    <ChevronLeft sx={{ fontSize: { xs: 16, sm: 24 } }} />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => nextHero()}
-                    sx={{
-                      position: 'absolute',
-                      right: { xs: 0, sm: -40 },
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      bgcolor: 'rgba(0, 0, 0, 0.5)',
-                      color: 'white',
-                      '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' },
-                      width: { xs: 24, sm: 40 },
-                      height: { xs: 24, sm: 40 },
-                      zIndex: 2
-                    }}
-                  >
-                    <ChevronRight sx={{ fontSize: { xs: 16, sm: 24 } }} />
-                  </IconButton>
-                  <Box sx={{ 
-                    position: 'absolute', 
-                    bottom: { xs: 4, sm: 16 }, 
-                    left: '50%', 
-                    transform: 'translateX(-50%)',
-                    display: 'flex',
-                    gap: { xs: 0.5, sm: 1 },
-                    zIndex: 2
-                  }}>
-                    {Array.from({ length: 3 }).map((_, index) => (
-                      <Box
-                        key={index}
-                        onClick={() => setHeroIndex(index)}
-                        sx={{
-                          width: { xs: 4, sm: 8 },
-                          height: { xs: 4, sm: 8 },
-                          borderRadius: '50%',
-                          bgcolor: heroIndex === index ? 'white' : 'rgba(255, 255, 255, 0.5)',
-                          cursor: 'pointer',
-                          transition: 'all 0.3s ease'
-                        }}
-                      />
-                    ))}
-                  </Box>
+                  {heroCarouselSlides.map((_, index) => (
+                    <Box
+                      key={index}
+                      onClick={() => setHeroIndex(index)}
+                      sx={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: '50%',
+                        bgcolor: heroIndex === index ? '#43ea4a' : 'rgba(255,255,255,0.5)',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease'
+                      }}
+                    />
+                  ))}
                 </Box>
               </Box>
             </Grid>
