@@ -258,7 +258,17 @@ const HomePage: React.FC = () => {
             <Grid item xs={12} md={6}>
               <Box sx={{ position: 'relative', width: '100%', height: { xs: 320, md: 420 }, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {/* Carousel Card with smooth transition */}
-                <Box sx={{ position: 'relative', width: '100%', maxWidth: 520, minHeight: { xs: 260, md: 340 }, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                <Box sx={{ 
+                  position: 'relative', 
+                  width: '100%', 
+                  maxWidth: 520, 
+                  minHeight: { xs: 260, md: 340 }, 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  overflow: 'hidden',
+                  px: { xs: 1, sm: 2 }
+                }}>
                   <Box
                     key={heroIndex}
                     sx={{
@@ -285,7 +295,7 @@ const HomePage: React.FC = () => {
                     <Paper elevation={0} sx={{
                       bgcolor: '#fff',
                       borderRadius: 10,
-                      p: { xs: 3, md: 7 },
+                      p: { xs: 2, sm: 4, md: 7 },
                       minHeight: { xs: 220, md: 340 },
                       width: '100%',
                       maxWidth: 520,
@@ -300,12 +310,28 @@ const HomePage: React.FC = () => {
                       border: '1.5px solid #222',
                     }}>
                       <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        {React.cloneElement(heroCarouselSlides[heroIndex].icon, { color: 'inherit', sx: { fontSize: 56, color: '#111', mb: 1 } })}
+                        {React.cloneElement(heroCarouselSlides[heroIndex].icon, { 
+                          color: 'inherit', 
+                          sx: { 
+                            fontSize: { xs: 40, sm: 48, md: 56 }, 
+                            color: '#111', 
+                            mb: 1 
+                          } 
+                        })}
                       </Box>
-                      <Typography variant="h4" sx={{ fontWeight: 800, color: 'black', mb: 2, fontSize: { xs: 22, md: 34 } }}>
+                      <Typography variant="h4" sx={{ 
+                        fontWeight: 800, 
+                        color: 'black', 
+                        mb: 2, 
+                        fontSize: { xs: 18, sm: 24, md: 34 } 
+                      }}>
                         {heroCarouselSlides[heroIndex].title}
                       </Typography>
-                      <Typography variant="h6" color="text.secondary" sx={{ fontSize: { xs: 14, md: 20 }, fontWeight: 500, color: 'black' }}>
+                      <Typography variant="h6" color="text.secondary" sx={{ 
+                        fontSize: { xs: 12, sm: 16, md: 20 }, 
+                        fontWeight: 500, 
+                        color: 'black' 
+                      }}>
                         {heroCarouselSlides[heroIndex].desc}
                       </Typography>
                     </Paper>
@@ -316,7 +342,7 @@ const HomePage: React.FC = () => {
                   position: 'absolute',
                   left: 0,
                   right: 0,
-                  bottom: { xs: -40, sm: -48, md: -56 },
+                  bottom: { xs: -32, sm: -40, md: -48 },
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -366,7 +392,7 @@ const HomePage: React.FC = () => {
                     gap: { xs: 0.5, sm: 1 },
                     zIndex: 2
                   }}>
-                    {Array.from({ length: 3 }).map((_, index) => (
+                    {Array.from({ length: heroCarouselSlides.length }).map((_, index) => (
                       <Box
                         key={index}
                         onClick={() => setHeroIndex(index)}
