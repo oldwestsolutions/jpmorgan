@@ -7,6 +7,8 @@ import Legend from './pages/Legend';
 import LoginPage from './pages/LoginPage';
 import Newsletter from './pages/Newsletter';
 import News from './pages/News';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 
 const theme = createTheme({
   palette: {
@@ -75,8 +77,9 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/legend" element={<Legend />} />
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/newsletter" element={<Newsletter />} />
           <Route path="/news" element={<News />} />
         </Routes>

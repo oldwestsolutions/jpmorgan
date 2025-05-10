@@ -41,6 +41,7 @@ import {
   MenuBook,
   Timeline as TimelineIcon,
   Article,
+  AutoStories,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -53,7 +54,8 @@ const Legend: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<'main' | 'bio' | 'options' | 'news'>('main');
+  const [currentView, setCurrentView] = useState<'main' | 'bio' | 'options' | 'news' | 'price'>('main');
+  const [isLegendView, setIsLegendView] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -161,8 +163,8 @@ const Legend: React.FC = () => {
     if (query.toLowerCase() === 'netflix') {
       setSearchResults([
         { 
-          title: '', 
-          description: '**Netflix** is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices.', 
+          title: 'Netflix, Inc.', 
+          description: '**Netflix** is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices. Founded in 1997, Netflix has grown to become one of the world\'s leading entertainment companies with over 200 million paid memberships in over 190 countries.', 
           price: '$500.00' 
         }
       ]);
@@ -216,7 +218,7 @@ const Legend: React.FC = () => {
     setSelectedStock(null);
   };
 
-  const handleViewChange = (view: 'main' | 'bio' | 'options' | 'news') => {
+  const handleViewChange = (view: 'main' | 'bio' | 'options' | 'news' | 'price') => {
     setCurrentView(view);
   };
 
@@ -240,6 +242,20 @@ const Legend: React.FC = () => {
     handleMailClose();
   };
 
+  const handleLegendToggle = () => {
+    if (isLegendView) {
+      setIsLegendView(false);
+      setSelectedStock(null);
+    } else {
+      setIsLegendView(true);
+    }
+  };
+
+  const handleLogoClick = () => {
+    setSelectedStock(null);
+    setIsLegendView(false);
+  };
+
   const renderBioView = () => (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -253,19 +269,62 @@ const Legend: React.FC = () => {
           <Grid item xs={12}>
             <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
               <Typography variant="h6" sx={{ mb: 1 }}>Company Overview</Typography>
-              <Typography variant="body1" color="text.secondary">
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
                 Netflix, Inc. is an American subscription streaming service and production company. Launched on August 29, 1997, it offers a film and television series library through distribution deals as well as its own productions, known as Netflix Originals.
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                The company's primary business is its subscription-based streaming service which offers online streaming of a library of films and television programs, including those produced in-house. As of 2024, Netflix has over 200 million paid memberships in over 190 countries.
               </Typography>
             </Box>
           </Grid>
           <Grid item xs={12}>
             <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
               <Typography variant="h6" sx={{ mb: 1 }}>Leadership</Typography>
-              <Typography variant="body1" color="text.secondary">
-                Reed Hastings (Co-Founder & Co-CEO)
-                Ted Sarandos (Co-CEO)
-                Greg Peters (COO & CPO)
-              </Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1 }}>
+                  <Typography variant="subtitle1" sx={{ color: '#43ea4a' }}>Reed Hastings</Typography>
+                  <Typography variant="body2" color="text.secondary">Co-Founder & Co-CEO</Typography>
+                </Box>
+                <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1 }}>
+                  <Typography variant="subtitle1" sx={{ color: '#43ea4a' }}>Ted Sarandos</Typography>
+                  <Typography variant="body2" color="text.secondary">Co-CEO</Typography>
+                </Box>
+                <Box sx={{ p: 1, bgcolor: '#333', borderRadius: 1 }}>
+                  <Typography variant="subtitle1" sx={{ color: '#43ea4a' }}>Greg Peters</Typography>
+                  <Typography variant="body2" color="text.secondary">COO & CPO</Typography>
+                </Box>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+              <Typography variant="h6" sx={{ mb: 1 }}>Key Statistics</Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6} md={3}>
+                  <Box sx={{ p: 1.5, bgcolor: '#333', borderRadius: 1 }}>
+                    <Typography variant="subtitle2" color="text.secondary">Market Cap</Typography>
+                    <Typography variant="h6" sx={{ color: '#43ea4a' }}>$250B</Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  <Box sx={{ p: 1.5, bgcolor: '#333', borderRadius: 1 }}>
+                    <Typography variant="subtitle2" color="text.secondary">Revenue (2023)</Typography>
+                    <Typography variant="h6" sx={{ color: '#43ea4a' }}>$33.7B</Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  <Box sx={{ p: 1.5, bgcolor: '#333', borderRadius: 1 }}>
+                    <Typography variant="subtitle2" color="text.secondary">Subscribers</Typography>
+                    <Typography variant="h6" sx={{ color: '#43ea4a' }}>200M+</Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  <Box sx={{ p: 1.5, bgcolor: '#333', borderRadius: 1 }}>
+                    <Typography variant="subtitle2" color="text.secondary">Employees</Typography>
+                    <Typography variant="h6" sx={{ color: '#43ea4a' }}>12,000+</Typography>
+                  </Box>
+                </Grid>
+              </Grid>
             </Box>
           </Grid>
         </Grid>
@@ -326,7 +385,6 @@ const Legend: React.FC = () => {
         </Box>
         {isMobile ? (
           <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {/* Mobile Robinhood Style Options Chain */}
             <Box sx={{ 
               display: 'flex', 
               gap: 1, 
@@ -367,7 +425,12 @@ const Legend: React.FC = () => {
                     border: '1px solid #333',
                     display: 'flex',
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    '&:hover': {
+                      borderColor: '#43ea4a',
+                      transform: 'translateY(-1px)',
+                      transition: 'all 0.2s'
+                    }
                   }}
                 >
                   <Box>
@@ -424,7 +487,11 @@ const Legend: React.FC = () => {
                     gridTemplateColumns: 'repeat(5, 1fr)',
                     gap: 1,
                     p: 1,
-                    '&:hover': { bgcolor: '#333' },
+                    '&:hover': { 
+                      bgcolor: '#333',
+                      transform: 'translateY(-1px)',
+                      transition: 'all 0.2s'
+                    },
                     cursor: 'pointer'
                   }}>
                     <Typography variant="body2">${strike}</Typography>
@@ -460,7 +527,11 @@ const Legend: React.FC = () => {
                     gridTemplateColumns: 'repeat(5, 1fr)',
                     gap: 1,
                     p: 1,
-                    '&:hover': { bgcolor: '#333' },
+                    '&:hover': { 
+                      bgcolor: '#333',
+                      transform: 'translateY(-1px)',
+                      transition: 'all 0.2s'
+                    },
                     cursor: 'pointer'
                   }}>
                     <Typography variant="body2">${strike}</Typography>
@@ -601,6 +672,106 @@ const Legend: React.FC = () => {
             <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
               <Typography variant="subtitle1" sx={{ mb: 1 }}>International Expansion Plans</Typography>
               <Typography variant="body2" color="text.secondary">May 5, 2024</Typography>
+            </Box>
+          </Grid>
+        </Grid>
+      </Paper>
+    </motion.div>
+  );
+
+  const renderPriceView = () => (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 20 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Paper sx={{ 
+        p: 2, 
+        bgcolor: '#1a1a1a', 
+        color: 'white', 
+        border: '1px solid #333',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        <Typography variant="h5" sx={{ mb: 2 }}>Stock Price Analysis</Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+              <Typography variant="h6" sx={{ mb: 1 }}>Price History</Typography>
+              <Box sx={{ 
+                height: 300, 
+                bgcolor: '#333', 
+                borderRadius: 1, 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center' 
+              }}>
+                <Typography variant="body1" color="text.secondary">Price Chart Placeholder</Typography>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+              <Typography variant="h6" sx={{ mb: 1 }}>Key Metrics</Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <Box sx={{ p: 1.5, bgcolor: '#333', borderRadius: 1 }}>
+                    <Typography variant="subtitle2" color="text.secondary">Current Price</Typography>
+                    <Typography variant="h6" sx={{ color: '#43ea4a' }}>$500.00</Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box sx={{ p: 1.5, bgcolor: '#333', borderRadius: 1 }}>
+                    <Typography variant="subtitle2" color="text.secondary">52W High</Typography>
+                    <Typography variant="h6" sx={{ color: '#43ea4a' }}>$550.00</Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box sx={{ p: 1.5, bgcolor: '#333', borderRadius: 1 }}>
+                    <Typography variant="subtitle2" color="text.secondary">52W Low</Typography>
+                    <Typography variant="h6" sx={{ color: '#ff4444' }}>$450.00</Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box sx={{ p: 1.5, bgcolor: '#333', borderRadius: 1 }}>
+                    <Typography variant="subtitle2" color="text.secondary">Volume</Typography>
+                    <Typography variant="h6" sx={{ color: '#43ea4a' }}>2.5M</Typography>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box sx={{ p: 2, bgcolor: '#2a2a2a', borderRadius: 1, border: '1px solid #333' }}>
+              <Typography variant="h6" sx={{ mb: 1 }}>Technical Indicators</Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <Box sx={{ p: 1.5, bgcolor: '#333', borderRadius: 1 }}>
+                    <Typography variant="subtitle2" color="text.secondary">RSI (14)</Typography>
+                    <Typography variant="h6" sx={{ color: '#43ea4a' }}>65.2</Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box sx={{ p: 1.5, bgcolor: '#333', borderRadius: 1 }}>
+                    <Typography variant="subtitle2" color="text.secondary">MACD</Typography>
+                    <Typography variant="h6" sx={{ color: '#43ea4a' }}>Bullish</Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box sx={{ p: 1.5, bgcolor: '#333', borderRadius: 1 }}>
+                    <Typography variant="subtitle2" color="text.secondary">Moving Avg (50)</Typography>
+                    <Typography variant="h6" sx={{ color: '#43ea4a' }}>$495.00</Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box sx={{ p: 1.5, bgcolor: '#333', borderRadius: 1 }}>
+                    <Typography variant="subtitle2" color="text.secondary">Moving Avg (200)</Typography>
+                    <Typography variant="h6" sx={{ color: '#43ea4a' }}>$485.00</Typography>
+                  </Box>
+                </Grid>
+              </Grid>
             </Box>
           </Grid>
         </Grid>
@@ -1017,7 +1188,17 @@ const Legend: React.FC = () => {
           }}
         >
           <Toolbar sx={{ minHeight: { xs: 56, sm: 64 } }}>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: { xs: '1rem', sm: '1.25rem' } }}>
+            <Typography 
+              variant="h6" 
+              component="div" 
+              sx={{ 
+                flexGrow: 1, 
+                fontSize: { xs: '1rem', sm: '1.25rem' },
+                cursor: 'pointer',
+                '&:hover': { color: '#43ea4a' }
+              }}
+              onClick={handleLogoClick}
+            >
               Legend
             </Typography>
             <Box sx={{ position: 'relative', mr: 1 }} className="search-container">
@@ -1074,6 +1255,19 @@ const Legend: React.FC = () => {
             >
               <Mail sx={{ fontSize: { xs: 24, sm: 28 } }} />
             </IconButton>
+            <IconButton
+              size="small"
+              edge="end"
+              color="inherit"
+              sx={{ 
+                ml: 0.5,
+                color: isLegendView ? '#43ea4a' : 'inherit',
+                '&:hover': { color: '#43ea4a' }
+              }}
+              onClick={handleLegendToggle}
+            >
+              <AutoStories sx={{ fontSize: { xs: 24, sm: 28 } }} />
+            </IconButton>
             {isComposing ? (
               renderComposeMessage()
             ) : renderMailDropdown()}
@@ -1101,6 +1295,54 @@ const Legend: React.FC = () => {
           ) : isMailboxFull ? (
             <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
               {renderMailbox()}
+            </Box>
+          ) : isLegendView ? (
+            <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+              <Paper sx={{ 
+                p: { xs: 1, sm: 2 }, 
+                bgcolor: '#1a1a1a', 
+                color: 'white', 
+                border: '1px solid #333', 
+                flex: 1, 
+                minHeight: 0, 
+                overflow: 'auto',
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+                <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>Legend Views</Typography>
+                <Grid container spacing={2}>
+                  {['Bio', 'Options', 'News'].map((view) => (
+                    <Grid item xs={12} sm={4} key={view}>
+                      <Box 
+                        sx={{ 
+                          p: 2, 
+                          bgcolor: '#2a2a2a', 
+                          borderRadius: 1, 
+                          border: '1px solid #333',
+                          cursor: 'pointer',
+                          '&:hover': { 
+                            borderColor: '#43ea4a',
+                            transform: 'translateY(-2px)',
+                            transition: 'all 0.2s'
+                          }
+                        }}
+                        onClick={() => {
+                          if (selectedStock) {
+                            handleViewChange(view.toLowerCase() as 'bio' | 'options' | 'news');
+                          }
+                        }}
+                      >
+                        <Typography variant="h6" sx={{ mb: 1, color: '#43ea4a' }}>{view}</Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {view === 'Bio' ? 'Company Information' : 
+                           view === 'Options' ? 'Trading Options' : 
+                           'Latest News & Updates'}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Paper>
             </Box>
           ) : (
             selectedStock ? (
@@ -1153,7 +1395,7 @@ const Legend: React.FC = () => {
                         cursor: 'pointer',
                         '&:hover': { opacity: 0.8 }
                       }}
-                      onClick={() => handleViewChange('options')}
+                      onClick={() => handleViewChange('price')}
                     >
                       <Typography variant="h6" sx={{ color: '#43ea4a', fontWeight: 600, fontSize: { xs: '1rem', sm: '1.25rem' } }}>
                         $500.00
@@ -1255,6 +1497,7 @@ const Legend: React.FC = () => {
                     {currentView === 'bio' && renderBioView()}
                     {currentView === 'options' && renderOptionsView()}
                     {currentView === 'news' && renderNewsView()}
+                    {currentView === 'price' && renderPriceView()}
                   </AnimatePresence>
                 </Paper>
               </Box>
