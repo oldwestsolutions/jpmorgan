@@ -517,7 +517,7 @@ const HomePage: React.FC = () => {
               margin: '8px',
               maxHeight: 'calc(100% - 16px)',
               position: 'absolute',
-              top: '2%',
+              top: '0%',
               transform: 'translateY(0)'
             }
           }
