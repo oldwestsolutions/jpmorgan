@@ -1088,7 +1088,7 @@ const Legend: React.FC = () => {
             mt: { xs: '56px', sm: '64px' },
             mb: { xs: 1, sm: 2 },
             height: { xs: 'calc(100vh - 64px)', sm: 'calc(100vh - 72px)' },
-            overflow: 'hidden',
+            overflow: 'auto',
             display: 'flex',
             flexDirection: 'column',
             position: 'relative'
