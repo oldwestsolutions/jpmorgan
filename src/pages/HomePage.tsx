@@ -269,17 +269,25 @@ const HomePage: React.FC = () => {
 
             {/* Right Column - White Carousel */}
             <Grid item xs={12} md={6}>
-              <Box sx={{ position: 'relative', width: '100%', maxWidth: 600, mx: 'auto' }}>
+              <Box sx={{ 
+                position: 'relative', 
+                width: { xs: '95vw', sm: '90vw', md: '100%' }, 
+                maxWidth: { xs: 'none', md: 600 }, 
+                mx: 'auto',
+                minWidth: 0,
+              }}>
                 {/* Carousel Content */}
                 <Box
                   sx={{
                     position: 'relative',
                     width: '100%',
-                    height: { xs: 240, sm: 280, md: 320 },
+                    height: { xs: 260, sm: 280, md: 320 },
                     overflow: 'hidden',
-                    borderRadius: 4,
+                    borderRadius: { xs: 3, md: 4 },
                     boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
                     touchAction: 'pan-y pinch-zoom',
+                    display: 'flex',
+                    alignItems: 'center',
                   }}
                 >
                   {heroCarouselSlides.map((slide, index) => (
@@ -297,12 +305,14 @@ const HomePage: React.FC = () => {
                         transform: `translateX(${heroIndex === index ? '0' : carouselDirection === 'right' ? '100%' : '-100%'})`,
                         background: slide.bgGradient,
                         p: { xs: 2, sm: 3, md: 4 },
+                        minWidth: 0,
                       }}
                     >
                       <Box 
                         sx={{ 
                           textAlign: 'center', 
-                          maxWidth: 600,
+                          width: '100%',
+                          maxWidth: { xs: '100%', sm: 500, md: 600 },
                           position: 'relative',
                           '&::before': {
                             content: '""',
@@ -332,7 +342,7 @@ const HomePage: React.FC = () => {
                         >
                           {React.cloneElement(slide.icon, {
                             sx: {
-                              fontSize: { xs: 36, sm: 42, md: 48 },
+                              fontSize: { xs: 32, sm: 40, md: 48 },
                               color: slide.accentColor,
                             }
                           })}
@@ -342,7 +352,7 @@ const HomePage: React.FC = () => {
                           sx={{
                             fontWeight: 700,
                             mb: 2,
-                            fontSize: { xs: 18, sm: 22, md: 24 },
+                            fontSize: { xs: 16, sm: 20, md: 24 },
                             color: '#111',
                             position: 'relative',
                             '&::after': {
@@ -364,7 +374,7 @@ const HomePage: React.FC = () => {
                           variant="body1"
                           sx={{
                             color: '#666',
-                            fontSize: { xs: 14, sm: 15, md: 16 },
+                            fontSize: { xs: 13, sm: 15, md: 16 },
                             lineHeight: 1.5,
                             position: 'relative',
                             zIndex: 1,
