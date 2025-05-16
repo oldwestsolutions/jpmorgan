@@ -79,27 +79,37 @@ const heroCarouselSlides = [
   {
     icon: <Email sx={{ fontSize: 48, color: 'secondary.main', mb: 1 }} />,
     title: 'Pro Newsletter Alerts',
-    desc: 'Get real-time earnings alerts, technical signals, and exclusive research delivered to your inbox.'
+    desc: 'Get real-time earnings alerts, technical signals, and exclusive research delivered to your inbox.',
+    bgGradient: 'linear-gradient(135deg, #f6f9fc 0%, #f1f4f8 100%)',
+    accentColor: '#43ea4a'
   },
   {
     icon: <Store sx={{ fontSize: 48, color: 'secondary.main', mb: 1 }} />,
     title: 'Algorithm Marketplace',
-    desc: 'Browse, buy, and deploy trading algorithms from top developers. Automate your edge.'
+    desc: 'Browse, buy, and deploy trading algorithms from top developers. Automate your edge.',
+    bgGradient: 'linear-gradient(135deg, #fff8f0 0%, #fff2e6 100%)',
+    accentColor: '#ff9500'
   },
   {
     icon: <EmojiEvents sx={{ fontSize: 48, color: 'secondary.main', mb: 1 }} />,
     title: 'Trading Tournaments',
-    desc: 'Compete in public trading tournaments powered by blockchain. Climb the leaderboard and win rewards.'
+    desc: 'Compete in public trading tournaments powered by blockchain. Climb the leaderboard and win rewards.',
+    bgGradient: 'linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%)',
+    accentColor: '#007aff'
   },
   {
     icon: <Insights sx={{ fontSize: 48, color: 'secondary.main', mb: 1 }} />,
     title: 'Sentiment & Financial Analysis',
-    desc: 'Gauge market sentiment and access advanced financial analytics for smarter trades.'
+    desc: 'Gauge market sentiment and access advanced financial analytics for smarter trades.',
+    bgGradient: 'linear-gradient(135deg, #f0fff4 0%, #e6ffed 100%)',
+    accentColor: '#34c759'
   },
   {
     icon: <Newspaper sx={{ fontSize: 48, color: 'secondary.main', mb: 1 }} />,
     title: 'News & Research',
-    desc: 'Stay ahead with curated news, research, and real-time market updates.'
+    desc: 'Stay ahead with curated news, research, and real-time market updates.',
+    bgGradient: 'linear-gradient(135deg, #f4f0ff 0%, #ede6ff 100%)',
+    accentColor: '#af52de'
   }
 ];
 
@@ -109,12 +119,13 @@ const HomePage: React.FC = () => {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [carouselDirection, setCarouselDirection] = useState<'left' | 'right'>('right');
 
-  // Auto-advance carousel every 10 seconds
+  // Auto-advance carousel every 5 seconds
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
+      setCarouselDirection('right');
       setHeroIndex((i) => (i + 1) % heroCarouselSlides.length);
-    }, 10000);
+    }, 5000);
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [heroIndex]);
 
@@ -127,7 +138,6 @@ const HomePage: React.FC = () => {
     setHeroIndex((i) => (i - 1 + heroCarouselSlides.length) % heroCarouselSlides.length);
   };
 
-  // Newsletter modal state
   const [newsletterOpen, setNewsletterOpen] = useState(false);
   const handleNewsletterOpen = () => setNewsletterOpen(true);
   const handleNewsletterClose = () => setNewsletterOpen(false);
@@ -207,7 +217,7 @@ const HomePage: React.FC = () => {
         </Toolbar>
       </AppBar>
 
-      {/* Hero Section with Carousel */}
+      {/* Hero Section */}
       <Box
         sx={{
           position: 'relative',
@@ -229,6 +239,7 @@ const HomePage: React.FC = () => {
       >
         <Container maxWidth="xl" sx={{ px: { xs: 1, sm: 2, md: 4 } }}>
           <Grid container spacing={4} alignItems="center" direction={{ xs: 'column-reverse', md: 'row' }}>
+            {/* Left Column - Text Content */}
             <Grid item xs={12} md={6} sx={{ textAlign: { xs: 'center', md: 'left' }, mb: { xs: 4, md: 0 } }}>
               <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 800, fontSize: { xs: 32, md: 54 }, lineHeight: 1.1, color: 'white' }}>
                 Trade with Confidence
@@ -255,123 +266,143 @@ const HomePage: React.FC = () => {
                 </Button>
               </Box>
             </Grid>
+
+            {/* Right Column - White Carousel */}
             <Grid item xs={12} md={6}>
-              <Box sx={{ 
-                position: 'relative', 
-                width: '100%', 
-                height: { xs: 260, md: 380 }, 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                px: { xs: 1, sm: 3, md: 4 }
-              }}>
-                {/* Carousel Card with smooth transition */}
-                <Box sx={{ 
-                  position: 'relative', 
-                  width: '100%', 
-                  maxWidth: { xs: '90%', sm: 400, md: 480 }, 
-                  minHeight: { xs: 220, md: 320 }, 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  overflow: 'hidden'
-                }}>
-                  <Box
-                    key={heroIndex}
-                    sx={{
-                      position: 'absolute',
-                      width: '100%',
-                      height: '100%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      transition: 'opacity 1.2s cubic-bezier(.4,1.4,.6,1), transform 1.2s cubic-bezier(.4,1.4,.6,1)',
-                      opacity: 1,
-                      zIndex: 1,
-                      animation: `${carouselDirection === 'right' ? 'fadeInRight' : 'fadeInLeft'} 1.2s`,
-                      '@keyframes fadeInRight': {
-                        from: { opacity: 0, transform: 'translateX(80px) scale(0.97)' },
-                        to: { opacity: 1, transform: 'translateX(0) scale(1)' },
-                      },
-                      '@keyframes fadeInLeft': {
-                        from: { opacity: 0, transform: 'translateX(-80px) scale(0.97)' },
-                        to: { opacity: 1, transform: 'translateX(0) scale(1)' },
-                      },
-                    }}
-                  >
-                    <Paper elevation={0} sx={{
-                      bgcolor: '#fff',
-                      borderRadius: 8,
-                      p: { xs: 2, sm: 3, md: 5 },
-                      minHeight: { xs: 200, md: 300 },
-                      width: '100%',
-                      maxWidth: { xs: '90%', sm: 380, md: 460 },
-                      textAlign: 'center',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 8px 48px #0008, 0 2px 16px #0008',
-                      position: 'relative',
-                      background: '#fff',
-                      border: '1.5px solid #222',
-                    }}>
-                      <Box sx={{ mb: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        {React.cloneElement(heroCarouselSlides[heroIndex].icon, { 
-                          color: 'inherit', 
-                          sx: { 
-                            fontSize: { xs: 32, sm: 42, md: 48 }, 
-                            color: '#111', 
-                            mb: 0.5 
-                          } 
-                        })}
-                      </Box>
-                      <Typography variant="h4" sx={{ 
-                        fontWeight: 800, 
-                        color: 'black', 
-                        mb: 1, 
-                        fontSize: { xs: 18, sm: 20, md: 28 } 
-                      }}>
-                        {heroCarouselSlides[heroIndex].title}
-                      </Typography>
-                      <Typography variant="h6" color="text.secondary" sx={{ 
-                        fontSize: { xs: 12, sm: 14, md: 18 }, 
-                        fontWeight: 500, 
-                        color: 'black',
-                        px: { xs: 0.5, sm: 2 }
-                      }}>
-                        {heroCarouselSlides[heroIndex].desc}
-                      </Typography>
-                    </Paper>
-                  </Box>
-                </Box>
-                {/* Carousel Dots - More subtle and without arrows */}
-                <Box sx={{ 
-                  position: 'absolute', 
-                  bottom: { xs: 8, sm: 12 }, 
-                  left: '50%', 
-                  transform: 'translateX(-50%)',
-                  display: 'flex',
-                  gap: { xs: 0.5, sm: 0.75 },
-                  zIndex: 2,
-                  bgcolor: 'rgba(0,0,0,0.2)',
-                  px: 1,
-                  py: 0.5,
-                  borderRadius: 2
-                }}>
-                  {Array.from({ length: heroCarouselSlides.length }).map((_, index) => (
+              <Box sx={{ position: 'relative', width: '100%', maxWidth: 600, mx: 'auto' }}>
+                {/* Carousel Content */}
+                <Box
+                  sx={{
+                    position: 'relative',
+                    width: '100%',
+                    height: { xs: 240, sm: 280, md: 320 },
+                    overflow: 'hidden',
+                    borderRadius: 4,
+                    boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
+                    touchAction: 'pan-y pinch-zoom',
+                  }}
+                >
+                  {heroCarouselSlides.map((slide, index) => (
                     <Box
                       key={index}
-                      onClick={() => setHeroIndex(index)}
+                      sx={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'opacity 0.5s ease, transform 0.5s ease',
+                        opacity: heroIndex === index ? 1 : 0,
+                        transform: `translateX(${heroIndex === index ? '0' : carouselDirection === 'right' ? '100%' : '-100%'})`,
+                        background: slide.bgGradient,
+                        p: { xs: 2, sm: 3, md: 4 },
+                      }}
+                    >
+                      <Box 
+                        sx={{ 
+                          textAlign: 'center', 
+                          maxWidth: 600,
+                          position: 'relative',
+                          '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            top: -20,
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            width: 60,
+                            height: 60,
+                            borderRadius: '50%',
+                            background: `${slide.accentColor}15`,
+                            zIndex: 0,
+                          }
+                        }}
+                      >
+                        <Box 
+                          sx={{ 
+                            mb: 2,
+                            position: 'relative',
+                            zIndex: 1,
+                            transform: 'scale(1)',
+                            transition: 'transform 0.3s ease',
+                            '&:hover': {
+                              transform: 'scale(1.1)',
+                            }
+                          }}
+                        >
+                          {React.cloneElement(slide.icon, {
+                            sx: {
+                              fontSize: { xs: 36, sm: 42, md: 48 },
+                              color: slide.accentColor,
+                            }
+                          })}
+                        </Box>
+                        <Typography
+                          variant="h4"
+                          sx={{
+                            fontWeight: 700,
+                            mb: 2,
+                            fontSize: { xs: 18, sm: 22, md: 24 },
+                            color: '#111',
+                            position: 'relative',
+                            '&::after': {
+                              content: '""',
+                              position: 'absolute',
+                              bottom: -8,
+                              left: '50%',
+                              transform: 'translateX(-50%)',
+                              width: 40,
+                              height: 3,
+                              background: slide.accentColor,
+                              borderRadius: 2,
+                            }
+                          }}
+                        >
+                          {slide.title}
+                        </Typography>
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            color: '#666',
+                            fontSize: { xs: 14, sm: 15, md: 16 },
+                            lineHeight: 1.5,
+                            position: 'relative',
+                            zIndex: 1,
+                          }}
+                        >
+                          {slide.desc}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  ))}
+                </Box>
+
+                {/* Carousel Dots */}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: 1,
+                    mt: 2
+                  }}
+                >
+                  {heroCarouselSlides.map((slide, index) => (
+                    <Box
+                      key={index}
+                      onClick={() => {
+                        setCarouselDirection(index > heroIndex ? 'right' : 'left');
+                        setHeroIndex(index);
+                      }}
                       sx={{
                         width: { xs: 6, sm: 8 },
                         height: { xs: 6, sm: 8 },
                         borderRadius: '50%',
-                        bgcolor: heroIndex === index ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.3)',
+                        bgcolor: heroIndex === index ? slide.accentColor : '#ddd',
                         cursor: 'pointer',
                         transition: 'all 0.3s ease',
                         '&:hover': {
-                          bgcolor: heroIndex === index ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.5)'
+                          bgcolor: heroIndex === index ? slide.accentColor : '#ccc',
+                          transform: 'scale(1.2)',
                         }
                       }}
                     />
