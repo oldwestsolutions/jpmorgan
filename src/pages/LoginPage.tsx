@@ -16,8 +16,8 @@ const LoginPage: React.FC = () => {
     <Box sx={{ minHeight: '100vh', bgcolor: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Container maxWidth="xs">
         <Paper elevation={3} sx={{ p: 4, borderRadius: 4, bgcolor: '#181818', boxShadow: '0 8px 32px #0008', color: 'white' }}>
-          <Typography variant="h4" sx={{ fontWeight: 800, mb: 2, color: 'white', fontFamily: 'Georgia, serif', textAlign: 'center' }}>
-            RobberBaron
+          <Typography variant="h4" component="h1" gutterBottom>
+            General Exchange
           </Typography>
           <Typography variant="h6" sx={{ mb: 3, color: 'white', textAlign: 'center' }}>
             Login to your account

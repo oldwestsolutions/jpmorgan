@@ -157,7 +157,7 @@ const HomePage: React.FC = () => {
               fontFamily: 'Georgia, serif',
             }}
           >
-            RobberBaron
+            General Exchange
           </Typography>
           
           {/* Search Bar */}
@@ -427,7 +427,7 @@ const HomePage: React.FC = () => {
       {/* Newsletter Modal with Paywall */}
       <Dialog open={newsletterOpen} onClose={handleNewsletterClose} maxWidth="xs" fullWidth>
         <DialogTitle sx={{ fontWeight: 800, fontFamily: 'Georgia, serif', color: '#111', textAlign: 'center', pt: 4 }}>
-          RobberBaron Newsletter
+          General Exchange Newsletter
         </DialogTitle>
         <DialogContent sx={{ textAlign: 'center', pb: 2 }}>
           <Typography variant="h6" sx={{ color: '#111', fontWeight: 700, mb: 2 }}>
@@ -626,7 +626,7 @@ const HomePage: React.FC = () => {
               {/* Dashboard Header */}
               <Box sx={{ bgcolor: '#232425', px: 3, py: 2, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
                 <Typography variant="subtitle1" sx={{ color: 'white', fontWeight: 700 }}>
-                  RobberBaron Intelligence Dashboard
+                  General Exchange Intelligence Dashboard
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', flex: 1, minHeight: 340 }}>
@@ -775,7 +775,7 @@ const HomePage: React.FC = () => {
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
               <Typography variant="h6" sx={{ mb: 2, fontWeight: 700, fontFamily: 'Georgia, serif' }}>
-                RobberBaron
+                General Exchange
               </Typography>
               <Typography variant="body2" sx={{ color: '#999', mb: 2 }}>
                 Advanced trading tools and expert insights to help you navigate the markets with confidence.
@@ -822,7 +822,7 @@ const HomePage: React.FC = () => {
           </Grid>
           <Divider sx={{ my: 4, borderColor: '#333' }} />
           <Typography variant="body2" sx={{ color: '#666', textAlign: 'center' }}>
-            © 2024 RobberBaron. All rights reserved.
+            © 2024 General Exchange. All rights reserved.
           </Typography>
         </Container>
       </Box>

@@ -93,7 +93,7 @@ const Legend: React.FC = () => {
           fontWeight: 700,
           color: '#fff'
         }}>
-          RobberBaron
+          General Exchange
         </Typography>
       </Box>
       <List>
@@ -1473,7 +1473,7 @@ const Legend: React.FC = () => {
               }}
               onClick={handleLogoClick}
             >
-              Legend
+              General Exchange
             </Typography>
             <Box sx={{ position: 'relative', mr: 1 }} className="search-container">
               <TextField

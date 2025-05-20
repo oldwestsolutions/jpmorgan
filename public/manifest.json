@@ -1,7 +1,7 @@
 {
-  "short_name": "RobberBaron",
-  "name": "RobberBaron",
-  "description": "RobberBaron: A professional, institutional-grade trading platform with a beautiful black-and-white interface. Access advanced analytics, real-time newsletter alerts, algorithm marketplace, public trading tournaments, sentiment analysis, and curated financial news.",
+  "short_name": "General Exchange",
+  "name": "General Exchange",
+  "description": "General Exchange: A professional, institutional-grade trading platform with a beautiful black-and-white interface. Access advanced analytics, real-time newsletter alerts, algorithm marketplace, public trading tournaments, and more.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#111111",
-  "background_color": "#111111"
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
 } 

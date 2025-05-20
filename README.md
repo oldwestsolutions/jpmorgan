@@ -1,4 +1,4 @@
-# RobberBaron Trading Platform
+# General Exchange Trading Platform
 
 A professional, institutional-grade trading platform built with React, TypeScript, and Material-UI.
 

@@ -166,7 +166,7 @@ const Newsletter: React.FC = () => {
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', justifyContent: 'center', mb: 2, gap: 2 }}>
           <Link href="/newsletter" underline="none">
             <Typography variant="h3" sx={{ fontFamily: 'Georgia, serif', fontWeight: 800, color: 'white', letterSpacing: 2, textTransform: 'uppercase' }}>
-              RobberBaron Newsletter
+              General Exchange Newsletter
             </Typography>
           </Link>
           <Button

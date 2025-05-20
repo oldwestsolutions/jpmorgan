@@ -32,8 +32,8 @@ const News: React.FC = () => {
           <Grid item xs={12} md={8}>
             {/* Featured Article */}
             <Paper elevation={0} sx={{ p: 4, mb: 4, bgcolor: '#fff', borderRadius: 3, boxShadow: '0 2px 12px #0001' }}>
-              <Typography variant="h4" sx={{ fontWeight: 800, mb: 2, fontFamily: 'Georgia, serif', color: '#222' }}>
-                Market Volatility Surges as Fed Signals Rate Uncertainty
+              <Typography variant="h4" component="h1" gutterBottom>
+                General Exchange News
               </Typography>
               <Typography variant="subtitle2" sx={{ color: '#888', mb: 2 }}>
                 By Jane Doe | June 2024
