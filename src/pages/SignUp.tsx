@@ -71,7 +71,7 @@ const SignUp: React.FC = () => {
             }}
             onClick={handleLogoClick}
           >
-            Robber Baron
+            General Exchange
           </Typography>
         </Box>
         <Container 

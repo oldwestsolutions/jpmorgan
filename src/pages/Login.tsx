@@ -68,7 +68,7 @@ const Login: React.FC = () => {
             }}
             onClick={handleLogoClick}
           >
-            Robber Baron
+            General Exchange
           </Typography>
         </Box>
         <Container 
@@ -214,7 +214,7 @@ const Login: React.FC = () => {
           }}
         >
           <Typography variant="body2">
-            © 2024 Robber Baron. All rights reserved.
+            © 2024 General Exchange. All rights reserved.
           </Typography>
         </Box>
       </Box>
