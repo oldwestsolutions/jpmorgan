@@ -9,6 +9,7 @@ import Newsletter from './pages/Newsletter';
 import News from './pages/News';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import Platform from './pages/Platform';
 
 const theme = createTheme({
   palette: {
@@ -82,6 +83,7 @@ function App() {
           <Route path="/legend" element={<Legend />} />
           <Route path="/newsletter" element={<Newsletter />} />
           <Route path="/news" element={<News />} />
+          <Route path="/platform" element={<Platform />} />
         </Routes>
       </Router>
     </ThemeProvider>

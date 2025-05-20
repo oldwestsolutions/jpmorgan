@@ -156,7 +156,7 @@ const HomePage: React.FC = () => {
         }}>
           <Box sx={{ 
             display: 'flex', 
-            width: '100%', 
+            width: { xs: '100%', md: 'auto' }, 
             justifyContent: 'space-between', 
             alignItems: 'center',
             mb: { xs: 1, md: 0 }
@@ -188,7 +188,8 @@ const HomePage: React.FC = () => {
                 fontSize: { xs: 12, md: 16 },
                 borderWidth: 2,
                 borderStyle: 'solid',
-                flexShrink: 0
+                flexShrink: 0,
+                display: { xs: 'block', md: 'none' }
               }}
               href="/login"
             >
@@ -232,6 +233,28 @@ const HomePage: React.FC = () => {
               }}
             />
           </Box>
+
+          {/* Desktop Login Button */}
+          <Button
+            variant="outlined"
+            color="primary"
+            sx={{
+              borderColor: '#fff',
+              color: '#fff',
+              fontWeight: 700,
+              borderRadius: 2,
+              px: 3,
+              py: 1,
+              fontSize: { xs: 12, md: 16 },
+              borderWidth: 2,
+              borderStyle: 'solid',
+              flexShrink: 0,
+              display: { xs: 'none', md: 'block' }
+            }}
+            href="/login"
+          >
+            Login
+          </Button>
         </Toolbar>
       </AppBar>
 
@@ -574,7 +597,7 @@ const HomePage: React.FC = () => {
                     color="secondary"
                     size="large"
                     endIcon={<ArrowForward />}
-                    onClick={() => navigate('/legend')}
+                    onClick={() => navigate('/platform')}
                     sx={{ mt: 4 }}
                   >
                     Explore Platform
@@ -813,7 +836,7 @@ const HomePage: React.FC = () => {
             <Grid item xs={12} md={2}>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 700 }}>Platform</Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Link href="/legend" sx={{ color: '#999', textDecoration: 'none', '&:hover': { color: 'white' } }}>Legend</Link>
+                <Link href="/platform" sx={{ color: '#999', textDecoration: 'none', '&:hover': { color: 'white' } }}>Platform</Link>
                 <Link href="/newsletter" sx={{ color: '#999', textDecoration: 'none', '&:hover': { color: 'white' } }}>Newsletter</Link>
                 <Link href="/news" sx={{ color: '#999', textDecoration: 'none', '&:hover': { color: 'white' } }}>News</Link>
                 <Link href="/login" sx={{ color: '#999', textDecoration: 'none', '&:hover': { color: 'white' } }}>Login</Link>
