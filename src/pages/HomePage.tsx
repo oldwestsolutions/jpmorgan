@@ -77,39 +77,39 @@ const carouselFade = keyframes`
 
 const heroCarouselSlides = [
   {
-    icon: <Email sx={{ fontSize: 48, color: 'secondary.main', mb: 1 }} />,
+    icon: <Email sx={{ fontSize: 48, color: 'black', mb: 1 }} />,
     title: 'Pro Newsletter Alerts',
     desc: 'Get real-time earnings alerts, technical signals, and exclusive research delivered to your inbox.',
-    bgGradient: 'linear-gradient(135deg, #f6f9fc 0%, #f1f4f8 100%)',
-    accentColor: '#43ea4a'
+    bgGradient: 'linear-gradient(135deg, #fff 0%, #fff 100%)',
+    accentColor: '#000'
   },
   {
-    icon: <Store sx={{ fontSize: 48, color: 'secondary.main', mb: 1 }} />,
+    icon: <Store sx={{ fontSize: 48, color: 'black', mb: 1 }} />,
     title: 'Algorithm Marketplace',
     desc: 'Browse, buy, and deploy trading algorithms from top developers. Automate your edge.',
-    bgGradient: 'linear-gradient(135deg, #fff8f0 0%, #fff2e6 100%)',
-    accentColor: '#ff9500'
+    bgGradient: 'linear-gradient(135deg, #fff 0%, #fff 100%)',
+    accentColor: '#000'
   },
   {
-    icon: <EmojiEvents sx={{ fontSize: 48, color: 'secondary.main', mb: 1 }} />,
+    icon: <EmojiEvents sx={{ fontSize: 48, color: 'black', mb: 1 }} />,
     title: 'Trading Tournaments',
     desc: 'Compete in public trading tournaments powered by blockchain. Climb the leaderboard and win rewards.',
-    bgGradient: 'linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%)',
-    accentColor: '#007aff'
+    bgGradient: 'linear-gradient(135deg, #fff 0%, #fff 100%)',
+    accentColor: '#000'
   },
   {
-    icon: <Insights sx={{ fontSize: 48, color: 'secondary.main', mb: 1 }} />,
+    icon: <Insights sx={{ fontSize: 48, color: 'black', mb: 1 }} />,
     title: 'Sentiment & Financial Analysis',
     desc: 'Gauge market sentiment and access advanced financial analytics for smarter trades.',
-    bgGradient: 'linear-gradient(135deg, #f0fff4 0%, #e6ffed 100%)',
-    accentColor: '#34c759'
+    bgGradient: 'linear-gradient(135deg, #fff 0%, #fff 100%)',
+    accentColor: '#000'
   },
   {
-    icon: <Newspaper sx={{ fontSize: 48, color: 'secondary.main', mb: 1 }} />,
+    icon: <Newspaper sx={{ fontSize: 48, color: 'black', mb: 1 }} />,
     title: 'News & Research',
     desc: 'Stay ahead with curated news, research, and real-time market updates.',
-    bgGradient: 'linear-gradient(135deg, #f4f0ff 0%, #ede6ff 100%)',
-    accentColor: '#af52de'
+    bgGradient: 'linear-gradient(135deg, #fff 0%, #fff 100%)',
+    accentColor: '#000'
   }
 ];
 

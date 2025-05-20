@@ -351,6 +351,116 @@ const Legend: React.FC = () => {
     </motion.div>
   );
 
+  const PaperTradingSim: React.FC = () => {
+    const [type, setType] = useState<'Call' | 'Put'>('Call');
+    const [strike, setStrike] = useState(500);
+    const [qty, setQty] = useState(1);
+    const [side, setSide] = useState<'Buy' | 'Sell'>('Buy');
+    const [portfolio, setPortfolio] = useState<any[]>([]);
+    const [history, setHistory] = useState<any[]>([]);
+
+    const price = type === 'Call' ? (strike * 0.1) : (strike * 0.08);
+
+    const handleTrade = () => {
+      const trade = {
+        time: new Date().toLocaleTimeString(),
+        type,
+        strike,
+        qty,
+        side,
+        price: price.toFixed(2),
+        total: (qty * price * 100 * (side === 'Buy' ? -1 : 1)).toFixed(2)
+      };
+      setHistory([trade, ...history]);
+      setPortfolio((prev) => {
+        const idx = prev.findIndex((p: any) => p.type === type && p.strike === strike && p.side === side);
+        if (idx > -1) {
+          const updated = [...prev];
+          updated[idx].qty += (side === 'Buy' ? qty : -qty);
+          return updated;
+        }
+        return [...prev, { type, strike, qty: (side === 'Buy' ? qty : -qty), side }];
+      });
+    };
+
+    return (
+      <Box>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} sm={2}>
+            <TextField select label="Type" value={type} onChange={e => setType(e.target.value as any)} size="small" fullWidth sx={{ bgcolor: '#2a2a2a', borderRadius: 1, color: 'white' }}>
+              <MenuItem value="Call">Call</MenuItem>
+              <MenuItem value="Put">Put</MenuItem>
+            </TextField>
+          </Grid>
+          <Grid item xs={12} sm={2}>
+            <TextField select label="Strike" value={strike} onChange={e => setStrike(Number(e.target.value))} size="small" fullWidth sx={{ bgcolor: '#2a2a2a', borderRadius: 1, color: 'white' }}>
+              {[500, 550, 600, 650, 700].map(s => <MenuItem key={s} value={s}>${s}</MenuItem>)}
+            </TextField>
+          </Grid>
+          <Grid item xs={12} sm={2}>
+            <TextField label="Qty" type="number" value={qty} onChange={e => setQty(Number(e.target.value))} size="small" fullWidth sx={{ bgcolor: '#2a2a2a', borderRadius: 1, color: 'white' }} inputProps={{ min: 1 }} />
+          </Grid>
+          <Grid item xs={12} sm={2}>
+            <TextField select label="Side" value={side} onChange={e => setSide(e.target.value as any)} size="small" fullWidth sx={{ bgcolor: '#2a2a2a', borderRadius: 1, color: 'white' }}>
+              <MenuItem value="Buy">Buy</MenuItem>
+              <MenuItem value="Sell">Sell</MenuItem>
+            </TextField>
+          </Grid>
+          <Grid item xs={12} sm={2}>
+            <Button variant="contained" color="primary" onClick={handleTrade} sx={{ bgcolor: '#43ea4a', color: '#111', fontWeight: 700, borderRadius: 2, px: 3, py: 1, width: '100%' }}>Simulate Trade</Button>
+          </Grid>
+          <Grid item xs={12} sm={2}>
+            <Typography variant="subtitle2" sx={{ color: '#43ea4a' }}>Price: ${price.toFixed(2)}</Typography>
+          </Grid>
+        </Grid>
+        <Box sx={{ mt: 3 }}>
+          <Typography variant="subtitle1" sx={{ mb: 1, color: '#43ea4a' }}>Portfolio</Typography>
+          <Paper sx={{ bgcolor: '#181a1b', p: 2, borderRadius: 1, mb: 2 }}>
+            {portfolio.length === 0 ? <Typography color="text.secondary">No positions yet.</Typography> : (
+              <Grid container spacing={1}>
+                <Grid item xs={3}><b>Type</b></Grid>
+                <Grid item xs={3}><b>Strike</b></Grid>
+                <Grid item xs={3}><b>Qty</b></Grid>
+                <Grid item xs={3}><b>Side</b></Grid>
+                {portfolio.map((pos, i) => (
+                  <React.Fragment key={i}>
+                    <Grid item xs={3}>{pos.type}</Grid>
+                    <Grid item xs={3}>${pos.strike}</Grid>
+                    <Grid item xs={3}>{pos.qty}</Grid>
+                    <Grid item xs={3}>{pos.side}</Grid>
+                  </React.Fragment>
+                ))}
+              </Grid>
+            )}
+          </Paper>
+          <Typography variant="subtitle1" sx={{ mb: 1, color: '#43ea4a' }}>Trade History</Typography>
+          <Paper sx={{ bgcolor: '#181a1b', p: 2, borderRadius: 1 }}>
+            {history.length === 0 ? <Typography color="text.secondary">No trades yet.</Typography> : (
+              <Grid container spacing={1}>
+                <Grid item xs={2}><b>Time</b></Grid>
+                <Grid item xs={2}><b>Type</b></Grid>
+                <Grid item xs={2}><b>Strike</b></Grid>
+                <Grid item xs={2}><b>Qty</b></Grid>
+                <Grid item xs={2}><b>Side</b></Grid>
+                <Grid item xs={2}><b>Total</b></Grid>
+                {history.map((trade, i) => (
+                  <React.Fragment key={i}>
+                    <Grid item xs={2}>{trade.time}</Grid>
+                    <Grid item xs={2}>{trade.type}</Grid>
+                    <Grid item xs={2}>${trade.strike}</Grid>
+                    <Grid item xs={2}>{trade.qty}</Grid>
+                    <Grid item xs={2}>{trade.side}</Grid>
+                    <Grid item xs={2}>{trade.total}</Grid>
+                  </React.Fragment>
+                ))}
+              </Grid>
+            )}
+          </Paper>
+        </Box>
+      </Box>
+    );
+  };
+
   const renderOptionsView = () => (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -590,6 +700,11 @@ const Legend: React.FC = () => {
             </Grid>
           </Grid>
         )}
+        {/* Paper Trading Section */}
+        <Box sx={{ mt: 4, p: 2, bgcolor: '#232323', borderRadius: 2, border: '1px solid #333' }}>
+          <Typography variant="h6" sx={{ mb: 2, color: '#43ea4a' }}>Simulate Paper Trading</Typography>
+          <PaperTradingSim />
+        </Box>
       </Paper>
     </motion.div>
   );
