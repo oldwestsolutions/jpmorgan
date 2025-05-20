@@ -1,38 +1,65 @@
 import React from 'react';
-import { Box, Button, Container, Paper, TextField, Typography, Link } from '@mui/material';
+import {
+  Box,
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Paper,
+  Link,
+  IconButton,
+} from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Allow any credentials to login
-    console.log('Login submitted, navigating to /legend');
-    navigate('/legend');
-  };
-
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <Container maxWidth="xs">
-        <Paper elevation={3} sx={{ p: 4, borderRadius: 4, bgcolor: '#181818', boxShadow: '0 8px 32px #0008', color: 'white' }}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            General Exchange
+    <Box sx={{ 
+      minHeight: '100vh', 
+      display: 'flex', 
+      flexDirection: 'column',
+      bgcolor: 'background.default',
+      color: 'white'
+    }}>
+      {/* Back Button */}
+      <Container maxWidth="xl" sx={{ mt: 4 }}>
+        <IconButton 
+          onClick={() => navigate('/')}
+          sx={{ 
+            color: 'white',
+            '&:hover': {
+              bgcolor: 'rgba(255, 255, 255, 0.1)'
+            }
+          }}
+        >
+          <ArrowBack />
+        </IconButton>
+      </Container>
+
+      <Container maxWidth="sm" sx={{ flex: 1, display: 'flex', alignItems: 'center', py: 8 }}>
+        <Paper 
+          elevation={0} 
+          sx={{ 
+            p: 4, 
+            width: '100%',
+            bgcolor: '#181A1B',
+            borderRadius: 4
+          }}
+        >
+          <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 700, textAlign: 'center', mb: 4, color: 'white' }}>
+            Welcome to General Exchange
           </Typography>
-          <Typography variant="h6" sx={{ mb: 3, color: 'white', textAlign: 'center' }}>
-            Login to your account
-          </Typography>
-          <Box component="form" onSubmit={handleLogin} noValidate autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          
+          <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <TextField
-              label="Email"
-              type="email"
-              variant="outlined"
               fullWidth
-              required
+              label="Email"
+              variant="outlined"
               sx={{
                 '& .MuiOutlinedInput-root': {
                   color: 'white',
-                  bgcolor: '#222',
                   '& fieldset': {
                     borderColor: '#444',
                   },
@@ -44,20 +71,22 @@ const LoginPage: React.FC = () => {
                   },
                 },
                 '& .MuiInputLabel-root': {
-                  color: '#bbb',
+                  color: '#888',
                 },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: '#888',
+                }
               }}
             />
+            
             <TextField
+              fullWidth
               label="Password"
               type="password"
               variant="outlined"
-              fullWidth
-              required
               sx={{
                 '& .MuiOutlinedInput-root': {
                   color: 'white',
-                  bgcolor: '#222',
                   '& fieldset': {
                     borderColor: '#444',
                   },
@@ -69,27 +98,48 @@ const LoginPage: React.FC = () => {
                   },
                 },
                 '& .MuiInputLabel-root': {
-                  color: '#bbb',
+                  color: '#888',
                 },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: '#888',
+                }
               }}
             />
+
             <Button
-              type="submit"
               variant="contained"
-              color="primary"
+              size="large"
               fullWidth
-              sx={{ bgcolor: '#fff', color: '#111', fontWeight: 700, borderRadius: 2, py: 1.5, mt: 1, '&:hover': { bgcolor: '#eee', color: '#111' } }}
+              sx={{
+                bgcolor: 'secondary.main',
+                color: '#000',
+                py: 1.5,
+                '&:hover': {
+                  bgcolor: 'secondary.dark',
+                  color: '#000'
+                }
+              }}
             >
               Login
             </Button>
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-            <Link href="#" underline="hover" sx={{ color: '#bbb', fontSize: 14 }}>
-              Forgot password?
-            </Link>
-            <Link href="#" underline="hover" sx={{ color: '#bbb', fontSize: 14 }}>
-              Sign up
-            </Link>
+
+            <Box sx={{ textAlign: 'center', mt: 2 }}>
+              <Typography variant="body2" sx={{ color: '#888' }}>
+                Don't have an account?{' '}
+                <Link 
+                  href="/signup" 
+                  sx={{ 
+                    color: 'secondary.main',
+                    textDecoration: 'none',
+                    '&:hover': {
+                      textDecoration: 'underline'
+                    }
+                  }}
+                >
+                  Sign up
+                </Link>
+              </Typography>
+            </Box>
           </Box>
         </Paper>
       </Container>

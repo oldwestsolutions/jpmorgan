@@ -1,7 +1,7 @@
 {
   "short_name": "General Exchange",
-  "name": "General Exchange",
-  "description": "General Exchange: A professional, institutional-grade trading platform with a beautiful black-and-white interface. Access advanced analytics, real-time newsletter alerts, algorithm marketplace, public trading tournaments, and more.",
+  "name": "General Exchange - Advanced Trading Platform",
+  "description": "Professional trading platform with institutional-grade tools and features",
   "icons": [
     {
       "src": "favicon.ico",
@@ -11,16 +11,62 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#111111",
+  "background_color": "#111111",
+  "orientation": "portrait",
+  "categories": ["finance", "business", "trading"],
+  "screenshots": [
+    {
+      "src": "screenshot1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "General Exchange Dashboard"
+    },
+    {
+      "src": "screenshot2.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Mobile Trading View"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Trading Dashboard",
+      "short_name": "Dashboard",
+      "description": "View your trading dashboard",
+      "url": "/dashboard",
+      "icons": [{ "src": "logo192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Market Analysis",
+      "short_name": "Analysis",
+      "description": "Access market analysis tools",
+      "url": "/analysis",
+      "icons": [{ "src": "logo192.png", "sizes": "192x192" }]
+    }
+  ],
+  "share_target": {
+    "action": "/share-target",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 } 

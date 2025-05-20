@@ -11,6 +11,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  IconButton,
 } from '@mui/material';
 import {
   Speed,
@@ -25,6 +26,7 @@ import {
   BarChart,
   TrendingUp,
   AccountBalance,
+  ArrowBack,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
@@ -87,6 +89,21 @@ const Platform: React.FC = () => {
 
   return (
     <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', py: 8 }}>
+      {/* Back Button */}
+      <Container maxWidth="xl" sx={{ mb: 4 }}>
+        <IconButton 
+          onClick={() => navigate('/')}
+          sx={{ 
+            color: 'white',
+            '&:hover': {
+              bgcolor: 'rgba(255, 255, 255, 0.1)'
+            }
+          }}
+        >
+          <ArrowBack />
+        </IconButton>
+      </Container>
+
       {/* Hero Section */}
       <Box sx={{ bgcolor: '#111', color: 'white', py: 8, mb: 8 }}>
         <Container maxWidth="xl">
@@ -104,11 +121,12 @@ const Platform: React.FC = () => {
                 size="large"
                 sx={{ 
                   bgcolor: 'secondary.main',
-                  color: 'white',
+                  color: '#000',
                   px: 4,
                   py: 1.5,
                   '&:hover': {
-                    bgcolor: 'secondary.dark'
+                    bgcolor: 'secondary.dark',
+                    color: '#000'
                   }
                 }}
                 onClick={() => navigate('/login')}
