@@ -146,31 +146,68 @@ const HomePage: React.FC = () => {
     <Box sx={{ flexGrow: 1 }}>
       {/* Header with Login button, no hamburger */}
       <AppBar position="static" color="transparent" elevation={0} sx={{ bgcolor: 'transparent', boxShadow: 'none', py: 2 }}>
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: { xs: 1, md: 3 } }}>
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 800,
-              color: 'white',
-              letterSpacing: 1,
-              fontSize: { xs: 22, md: 28 },
-              fontFamily: 'Georgia, serif',
-            }}
-          >
-            General Exchange
-          </Typography>
+        <Toolbar sx={{ 
+          display: 'flex', 
+          flexDirection: { xs: 'column', md: 'row' },
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          px: { xs: 1, md: 3 }, 
+          gap: 1 
+        }}>
+          <Box sx={{ 
+            display: 'flex', 
+            width: '100%', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            mb: { xs: 1, md: 0 }
+          }}>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 800,
+                color: 'white',
+                letterSpacing: 1,
+                fontSize: { xs: 14, sm: 18, md: 24 },
+                fontFamily: 'Georgia, serif',
+                flexShrink: 0
+              }}
+            >
+              General Exchange
+            </Typography>
+
+            <Button
+              variant="outlined"
+              color="primary"
+              sx={{
+                borderColor: '#fff',
+                color: '#fff',
+                fontWeight: 700,
+                borderRadius: 2,
+                px: 3,
+                py: 1,
+                fontSize: { xs: 12, md: 16 },
+                borderWidth: 2,
+                borderStyle: 'solid',
+                flexShrink: 0
+              }}
+              href="/login"
+            >
+              Login
+            </Button>
+          </Box>
           
           {/* Search Bar */}
           <Box sx={{ 
             flexGrow: 1, 
             maxWidth: 600, 
-            mx: 4,
-            display: { xs: 'none', md: 'block' }
+            width: '100%',
+            display: 'block'
           }}>
             <TextField
               fullWidth
               variant="outlined"
               placeholder="Search stocks, news, or strategies..."
+              size="small"
               sx={{
                 '& .MuiOutlinedInput-root': {
                   bgcolor: '#222',
@@ -195,25 +232,6 @@ const HomePage: React.FC = () => {
               }}
             />
           </Box>
-
-          <Button
-            variant="outlined"
-            color="primary"
-            sx={{
-              borderColor: '#fff',
-              color: '#fff',
-              fontWeight: 700,
-              borderRadius: 2,
-              px: 3,
-              py: 1,
-              fontSize: { xs: 14, md: 16 },
-              borderWidth: 2,
-              borderStyle: 'solid',
-            }}
-            href="/login"
-          >
-            Login
-          </Button>
         </Toolbar>
       </AppBar>
 
